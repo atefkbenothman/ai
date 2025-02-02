@@ -1,9 +1,10 @@
 import Content from "@/components/containers/content"
 
-export default function Home() {
+export default function Syntax() {
   return (
     <Content>
-      <p>Home</p>
+      <p>Syntax</p>
+      <p>Example code syntax</p>
     </Content>
   )
 }

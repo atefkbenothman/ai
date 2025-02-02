@@ -9,30 +9,30 @@ import {
   SidebarGroupContent,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem
+  SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import {
-  Home,
-  LayoutDashboard,
-  MessageCircle
-} from "lucide-react"
-
+import { Home, LayoutDashboard, MessageCircle, CodeXml } from "lucide-react"
 
 const items = [
   {
     title: "Home",
     url: "/",
-    icon: Home
+    icon: Home,
   },
   {
     title: "Dashboard",
     url: "/dashboard",
-    icon: LayoutDashboard
+    icon: LayoutDashboard,
   },
   {
     title: "Chat",
     url: "/chat",
-    icon: MessageCircle
+    icon: MessageCircle,
+  },
+  {
+    title: "Syntax",
+    url: "/syntax",
+    icon: CodeXml,
   },
 ]
 
@@ -44,11 +44,21 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu className="gap-2">
-              {items.map(item => (
+              {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild className="gap-4 items-center" isActive={pathname === item.url || (item.url === "/" && pathname === "")}>
-                    <a href={item.url} className="font-medium text-base">
-                      <item.icon />
+                  <SidebarMenuButton
+                    asChild
+                    className="items-center gap-4"
+                    isActive={
+                      pathname === item.url ||
+                      (item.url === "/" && pathname === "")
+                    }
+                  >
+                    <a
+                      href={item.url}
+                      className="font-[family-name:var(--font-pretendard)] text-base font-medium"
+                    >
+                      <item.icon strokeWidth={2.3} />
                       <span>{item.title}</span>
                     </a>
                   </SidebarMenuButton>

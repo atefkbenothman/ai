@@ -1,6 +1,8 @@
-export default function Content({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function Content({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div className="flex-1 h-[calc(100vh-3rem)] px-4 pb-4 overscroll-y-none">
+    <div className="h-[calc(100vh-3rem)] flex-1 overscroll-y-none px-4 pb-4">
       {children}
     </div>
   )
