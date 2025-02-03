@@ -1,16 +1,16 @@
 "use client"
 
 import { useState } from "react"
-import { type CoreMessage } from "ai"
+import { CoreMessage } from "ai"
 import { AutoResizeTextArea } from "@/components/autoresize-textarea"
 import { Button } from "@/components/ui/button"
 import { ArrowUpIcon } from "lucide-react"
 
-type ChatFormProps = {
-  addMessage: (message: CoreMessage) => void
+type ChatInputProps = {
+  createMessage: (message: CoreMessage) => void
 }
 
-export function ChatForm({ addMessage }: ChatFormProps) {
+export function ChatInput({ createMessage }: ChatInputProps) {
   const [message, setMessage] = useState<string>("")
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -26,8 +26,7 @@ export function ChatForm({ addMessage }: ChatFormProps) {
       setMessage("")
       return
     }
-    const newMessage = { role: "user", content: message } as CoreMessage
-    addMessage(newMessage)
+    createMessage({ role: "user", content: message } as CoreMessage)
     setMessage("")
   }
 

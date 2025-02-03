@@ -1,6 +1,6 @@
 import localFont from "next/font/local"
 import { cookies } from "next/headers"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Geist_Mono } from "next/font/google"
 import "./globals.css"
 
@@ -20,6 +20,13 @@ export const metadata: Metadata = {
   description: "ai-web",
 }
 
+export const viewport: Viewport = {
+  initialScale: 1,
+  width: "device-width",
+  maximumScale: 1,
+  viewportFit: "cover",
+}
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -34,7 +41,7 @@ export default async function RootLayout({
         <script src="https://unpkg.com/react-scan/dist/auto.global.js" async />
       </head> */}
       <body
-        className={`${geistMono.variable} ${pretendardFont.className} dark antialiased`}
+        className={`${geistMono.variable} ${pretendardFont.className} dark max-w-full antialiased`}
       >
         <SidebarProvider defaultOpen={defaultOpen}>
           <AppSidebar />

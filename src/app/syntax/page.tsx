@@ -1,10 +1,10 @@
-import Content from "@/components/containers/content"
+import { PageContent } from "@/components/containers/page-content"
 
 export default function Syntax() {
   return (
-    <Content>
+    <PageContent>
       <p>Syntax</p>
       <p>Example code syntax</p>
-    </Content>
+    </PageContent>
   )
 }

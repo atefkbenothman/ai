@@ -1,12 +1,18 @@
 "use server"
 
-import Content from "@/components/containers/content"
-import ChatContainer from "./chat-container"
+import { PageContent } from "@/components/containers/page-content"
+import { CoreMessage } from "ai"
+import { Chat } from "@/app/chat/chat"
 
-export default async function Chat() {
+export default async function ChatPage() {
+  // retrieve messages from some kind of db
+  const messages = [
+    { role: "system", content: "You are an AI assistant." },
+  ] as CoreMessage[]
+
   return (
-    <Content>
-      <ChatContainer />
-    </Content>
+    <PageContent>
+      <Chat model="groq" initialMessages={messages} />
+    </PageContent>
   )
 }

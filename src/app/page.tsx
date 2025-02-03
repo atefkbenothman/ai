@@ -1,9 +1,9 @@
-import Content from "@/components/containers/content"
+import { PageContent } from "@/components/containers/page-content"
 
 export default function Home() {
   return (
-    <Content>
+    <PageContent>
       <p>Home</p>
-    </Content>
+    </PageContent>
   )
 }

@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { usePathname } from "next/navigation"
 import {
   Sidebar,
@@ -54,13 +55,13 @@ export function AppSidebar() {
                       (item.url === "/" && pathname === "")
                     }
                   >
-                    <a
+                    <Link
                       href={item.url}
                       className="font-[family-name:var(--font-pretendard)] text-base font-medium"
                     >
                       <item.icon strokeWidth={2.3} />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

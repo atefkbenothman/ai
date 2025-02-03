@@ -3,13 +3,11 @@
 import { AI } from "@atefkbenothman/ai-core"
 import { type CoreMessage } from "ai"
 
-const ai = new AI(
-  "groq",
-  "deepseek-r1-distill-llama-70b",
-  "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",
-)
+const apiKey = process.env.API_KEY ?? ""
 
-export async function streamChat(messages: CoreMessage[]) {
+const ai = new AI("groq", "deepseek-r1-distill-llama-70b", apiKey)
+
+export async function chat(messages: CoreMessage[]) {
   const { success, textStream, error } = await ai.streamChat(messages)
   const readableStream = new ReadableStream({
     async pull(controller) {

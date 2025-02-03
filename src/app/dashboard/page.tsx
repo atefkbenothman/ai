@@ -1,9 +1,9 @@
-import Content from "@/components/containers/content"
+import { PageContent } from "@/components/containers/page-content"
 
 export default function Dashboard() {
   return (
-    <Content>
+    <PageContent>
       <p>Dashboard</p>
-    </Content>
+    </PageContent>
   )
 }
