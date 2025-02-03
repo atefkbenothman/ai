@@ -23,23 +23,30 @@ export function Chat({ model, initialMessages }: ChatProps) {
   }, [messages])
 
   const askAI = async (messages: CoreMessage[]) => {
-    // create empty message. we will update the content of this message when getting streamed output from server
-    createMessage({ role: "assistant", content: "" })
-    // get streamed response from ai
-    let fullResponse = ""
-    const { success, readableStream } = await chat(messages)
-    if (success && readableStream) {
-      const reader = readableStream.getReader()
-      while (true) {
-        const { done, value } = await reader.read()
-        if (done) break
-        fullResponse += value
-        setMessages((prevMessages) => {
-          const allMessages = prevMessages.slice(0, -1) // pop out the previous partial message and update it with new partial data
-          allMessages.push({ role: "assistant", content: fullResponse.trim() })
-          return allMessages
-        })
+    try {
+      // create empty message. we will update the content of this message when getting streamed output from server
+      createMessage({ role: "assistant", content: "" })
+      // get streamed response from ai
+      let fullResponse = ""
+      const { success, readableStream } = await chat(messages)
+      if (success && readableStream) {
+        const reader = readableStream.getReader()
+        while (true) {
+          const { done, value } = await reader.read()
+          if (done) break
+          fullResponse += value
+          setMessages((prevMessages) => {
+            const allMessages = prevMessages.slice(0, -1) // pop out the previous partial message and update it with new partial data
+            allMessages.push({ role: "assistant", content: fullResponse.trim() })
+            return allMessages
+          })
+        }
       }
+    } catch (err) {
+      setMessages((prevMessages) => [
+        ...prevMessages.slice(0, -1),
+        { role: "assistant", content: `I encountered an error with your request: ${err}` }
+      ])
     }
   }
 
