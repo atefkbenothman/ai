@@ -1,20 +1,14 @@
+import localFont from "next/font/local"
 import { cookies } from "next/headers"
-import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import type { Metadata, Viewport } from "next"
+import { Geist_Mono } from "next/font/google"
 import "./globals.css"
 
-import {
-  SidebarInset,
-  SidebarProvider,
-} from "@/components/ui/sidebar"
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/nav/app-sidebar"
 import NavHeader from "@/components/nav/nav-header"
 
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-})
+const pretendardFont = localFont({ src: "../fonts/pretendard.woff2" })
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -26,29 +20,37 @@ export const metadata: Metadata = {
   description: "ai-web",
 }
 
+export const viewport: Viewport = {
+  initialScale: 1,
+  width: "device-width",
+  maximumScale: 1,
+  viewportFit: "cover",
+}
+
 export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   const cookieStore = await cookies()
   const defaultOpen = cookieStore.get("sidebar:state")?.value === "true"
 
   return (
     <html lang="en">
+      {/* <head>
+        <script src="https://unpkg.com/react-scan/dist/auto.global.js" async />
+      </head> */}
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
+        className={`${geistMono.variable} ${pretendardFont.className} dark max-w-full antialiased`}
       >
         <SidebarProvider defaultOpen={defaultOpen}>
           <AppSidebar />
           <SidebarInset>
             <NavHeader />
-            <main>
-              {children}
-            </main>
+            <main>{children}</main>
           </SidebarInset>
         </SidebarProvider>
       </body>
     </html>
-  );
+  )
 }

@@ -1,30 +1,50 @@
-"use server"
+"use client"
 
-import { cn } from "@/lib/utils"
-
-
-function Message({ message }: { message: { id: number, text: string, sender: string } }) {
-  return (
-    <div className={cn("flex", message.sender === "me" ? "justify-end" : "justify-start")}>
-      <div className={cn("max-w-3xl py-1.5 px-2 rounded text-sm font-medium font-[family-name:var(--font-geist-mono)]", message.sender === "me" ? "bg-blue-600 text-white" : "bg-gray-700 text-white")}>
-        <p className="tracking-wide">
-          {message.text}
-        </p>
-      </div>
-    </div>
-  )
-}
+import { type CoreMessage } from "ai"
+import { useEffect, useRef } from "react"
+import { AssistantMessage, UserMessage } from "@/app/chat/message"
 
 type MessageListProps = {
-  messages: any[]
+  messages: CoreMessage[]
 }
 
-export default async function MessageList({ messages }: MessageListProps) {
+export function MessageList({ messages }: MessageListProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const endRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const container = containerRef.current
+    const end = endRef.current
+
+    if (container && end) {
+      const observer = new MutationObserver(() => {
+        end.scrollIntoView({ behavior: "instant", block: "end" })
+      })
+      observer.observe(container, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        characterData: true,
+      })
+
+      return () => observer.disconnect()
+    }
+  }, [messages])
+
   return (
-    <div className="flex-1 overflow-y-auto p-4 space-y-4">
-      {messages.map(message => (
-        <Message key={message.id} message={message} />
-      ))}
+    <div
+      ref={containerRef}
+      className="no-scrollbar flex-1 flex-col-reverse space-y-4 overflow-y-auto p-4"
+    >
+      <AssistantMessage message={{ role: "assistant", content: "Hello!" }} />
+      {messages.map((message, idx) => {
+        if (message.role === "user") {
+          return <UserMessage key={idx} message={message} />
+        } else if (message.role === "assistant") {
+          return <AssistantMessage key={idx} message={message} />
+        }
+      })}
+      <div ref={endRef} className="invisible" />
     </div>
   )
 }

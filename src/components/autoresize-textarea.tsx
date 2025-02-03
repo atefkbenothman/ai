@@ -1,18 +1,26 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { TextareaHTMLAttributes, useEffect, useRef, useState } from "react"
+import { TextareaHTMLAttributes, useEffect, useRef } from "react"
 
-
-interface AutoResizeTextAreaProps extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "value" | "onChange"> {
+interface AutoResizeTextAreaProps
+  extends Omit<
+    TextareaHTMLAttributes<HTMLTextAreaElement>,
+    "value" | "onChange"
+  > {
   name: string
+  value: string
+  onChange: (message: string) => void
 }
 
-
-export default function AutoResizeTextArea({ className, name, ...props }: AutoResizeTextAreaProps) {
+export function AutoResizeTextArea({
+  className,
+  name,
+  value,
+  onChange,
+  ...props
+}: AutoResizeTextAreaProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
-
-  const [value, setValue] = useState<string>("")
 
   const resizeTextArea = () => {
     const textarea = textareaRef.current
@@ -32,12 +40,16 @@ export default function AutoResizeTextArea({ className, name, ...props }: AutoRe
       ref={textareaRef}
       name={name}
       rows={1}
+      required
       value={value}
       onChange={(e) => {
-        setValue(e.target.value)
+        onChange(e.target.value)
         resizeTextArea()
       }}
-      className={cn("text-white font-bold resize-none min-h-4 max-h-60", className)}
+      className={cn(
+        "max-h-60 min-h-4 resize-none font-medium text-white",
+        className,
+      )}
     />
   )
 }

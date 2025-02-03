@@ -1,9 +1,10 @@
 import { PageContent } from "@/components/containers/page-content"
 
-export default function Dashboard() {
+export default function Syntax() {
   return (
     <PageContent>
-      <p>Dashboard</p>
+      <p>Syntax</p>
+      <p>Example code syntax</p>
     </PageContent>
   )
 }
