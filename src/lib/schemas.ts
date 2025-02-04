@@ -1,14 +1,17 @@
 import { z } from "zod"
 
+export type ObjectSchemaType = "snippets" | "pull-request"
+
 /* Code Snippets Schema */
 export const codeSnippetSchema = z.object({
   snippets: z.array(
     z.object({
       language: z
         .string()
-        .describe("programming language the code was written in"),
-      snippet: z.string().describe("code snippet"),
-      summary: z.string().describe("summary of the code"),
+        .describe("programming language the code was written in")
+        .optional(),
+      snippet: z.string().describe("code snippet").optional(),
+      summary: z.string().describe("summary of the code").optional(),
     }),
   ),
 })
@@ -34,3 +37,8 @@ export const ghPullRequestSchema = z.object({
 })
 
 export type GHPullRequestSchema = z.infer<typeof ghPullRequestSchema>
+
+export const SCHEMA: Record<ObjectSchemaType, z.ZodSchema> = {
+  snippets: codeSnippetSchema,
+  "pull-request": ghPullRequestSchema,
+}

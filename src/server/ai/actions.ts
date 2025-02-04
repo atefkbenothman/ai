@@ -1,8 +1,8 @@
 "use server"
 
-import { z } from "zod"
 import { AI } from "@atefkbenothman/ai-core"
 import { type CoreMessage } from "ai"
+import { SCHEMA, ObjectSchemaType } from "@/lib/schemas"
 
 const apiKey = process.env.API_KEY ?? ""
 
@@ -39,23 +39,20 @@ export async function chat(messages: CoreMessage[]): Promise<AIResponse> {
   }
 }
 
-const simpleSchema = z.object({
-  name: z.string(),
-  age: z.number().int().positive(),
-})
-
-export async function getObject(messages: CoreMessage[]): Promise<AIResponse> {
+export async function getObject(
+  messages: CoreMessage[],
+  schemaType: ObjectSchemaType,
+): Promise<AIResponse> {
   const { success, partialObjectStream, error } = await ai.streamCreateObject(
     messages,
-    simpleSchema,
+    SCHEMA[schemaType],
   )
   const stream = new ReadableStream({
     async pull(controller) {
       try {
         if (success && partialObjectStream) {
           for await (const chunk of partialObjectStream) {
-            controller.enqueue(chunk)
-            console.dir(chunk, { depth: Infinity })
+            controller.enqueue(JSON.stringify(chunk))
           }
         }
       } catch (error) {

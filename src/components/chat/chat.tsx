@@ -11,13 +11,17 @@ type ChatProps = {
 }
 
 export function Chat({ model }: ChatProps) {
-  const { messages, addMessage } = useChat()
+  const { messages, addMessage, chatType, schemaType } = useChat()
 
   return (
     <div className="no-scrollbar flex h-full max-w-full flex-col overflow-x-auto rounded-md border-[1.5px]">
       <ChatHeader model={model} />
       <Separator />
-      <MessageList messages={messages} />
+      <MessageList
+        messages={messages}
+        chatType={chatType}
+        schemaType={schemaType}
+      />
       <ChatInput addMessage={addMessage} />
     </div>
   )
