@@ -2,7 +2,7 @@
 
 import { type CoreMessage } from "ai"
 import { useEffect, useRef } from "react"
-import { AssistantMessage, UserMessage } from "@/app/chat/message"
+import { AssistantMessage, UserMessage } from "@/components/chat/message"
 
 type MessageListProps = {
   messages: CoreMessage[]

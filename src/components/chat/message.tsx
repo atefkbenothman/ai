@@ -38,7 +38,7 @@ export function UserMessage({ message }: MessageProps) {
 export function AssistantMessage({ message }: MessageProps) {
   return (
     <div className="flex justify-start">
-      <div className="max-w-2xl rounded bg-[#1a1a1b] px-2 py-1.5 text-sm font-medium text-white xl:max-w-3xl">
+      <div className="max-w-2xl rounded bg-neutral-900 px-2 py-1.5 text-sm font-medium text-white xl:max-w-3xl">
         {message.content.length === 0 ? (
           <LoadingAnimation />
         ) : (
