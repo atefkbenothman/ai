@@ -9,13 +9,11 @@ const apiKey = process.env.API_KEY ?? ""
 // setup api model
 const ai = new AI("groq", "deepseek-r1-distill-llama-70b", apiKey)
 
-
 export type AIResponse = {
   success: boolean
-  stream: ReadableStream<any>
+  stream: ReadableStream
   error?: string
 }
-
 
 export async function chat(messages: CoreMessage[]): Promise<AIResponse> {
   const { success, textStream, error } = await ai.streamChat(messages)
@@ -57,7 +55,7 @@ export async function getObject(messages: CoreMessage[]): Promise<AIResponse> {
         if (success && partialObjectStream) {
           for await (const chunk of partialObjectStream) {
             controller.enqueue(chunk)
-            console.dir(chunk, { depth: Infinity})
+            console.dir(chunk, { depth: Infinity })
           }
         }
       } catch (error) {

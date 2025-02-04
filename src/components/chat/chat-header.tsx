@@ -8,10 +8,9 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuPortal,
   DropdownMenuSubContent,
-  DropdownMenuItem
+  DropdownMenuItem,
 } from "@radix-ui/react-dropdown-menu"
 import { Menu } from "lucide-react"
-
 
 type ChatHeaderProps = {
   model: string
@@ -22,6 +21,7 @@ export function ChatHeader({ model }: ChatHeaderProps) {
 
   const handlePromptSelect = (prompt: string) => {
     setSelectedPrompt(prompt)
+    console.log(selectedPrompt)
   }
 
   return (
@@ -96,7 +96,7 @@ export function ChatHeader({ model }: ChatHeaderProps) {
             </DropdownMenuSub>
           </DropdownMenuContent>
         </DropdownMenu>
-      </div >
-    </div >
+      </div>
+    </div>
   )
 }

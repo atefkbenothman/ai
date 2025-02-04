@@ -4,12 +4,11 @@ import { CoreMessage } from "ai"
 import { useEffect, useState } from "react"
 import { AIResponse, chat, getObject } from "@/server/ai/actions"
 
-
 type ChatType = "chat" | "object"
 
 const chatTypes = {
-  "chat": chat,
-  "object": getObject
+  chat: chat,
+  object: getObject,
 }
 
 export function useChat() {
@@ -22,13 +21,17 @@ export function useChat() {
     if (lastMessage?.role === "user") {
       sendChat(messages, chatTypes[chatType])
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages])
 
   const addMessage = (message: CoreMessage) => {
     setMessages((prevMessages) => [...prevMessages, message])
   }
 
-  const sendChat = async (messages: CoreMessage[], chatFn: (messages: CoreMessage[]) => Promise<AIResponse>) => {
+  const sendChat = async (
+    messages: CoreMessage[],
+    chatFn: (messages: CoreMessage[]) => Promise<AIResponse>,
+  ) => {
     try {
       // add empty message
       // we will update the content of this message with streamed output from ai
@@ -56,8 +59,8 @@ export function useChat() {
         ...prevMessages.slice(0, -1),
         {
           role: "assistant",
-          content: `I encountered an error with your request: \n${err}`
-        }
+          content: `I encountered an error with your request: \n${err}`,
+        },
       ])
     }
   }
@@ -66,6 +69,6 @@ export function useChat() {
     messages,
     chatType,
     setChatType,
-    addMessage
+    addMessage,
   }
 }
