@@ -1,4 +1,3 @@
-import localFont from "next/font/local"
 import { cookies } from "next/headers"
 import type { Metadata, Viewport } from "next"
 import { Geist_Mono } from "next/font/google"
@@ -7,8 +6,6 @@ import "./globals.css"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/nav/app-sidebar"
 import NavHeader from "@/components/nav/nav-header"
-
-const pretendardFont = localFont({ src: "../fonts/pretendard.woff2" })
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -40,9 +37,7 @@ export default async function RootLayout({
       {/* <head>
         <script src="https://unpkg.com/react-scan/dist/auto.global.js" async />
       </head> */}
-      <body
-        className={`${geistMono.variable} ${pretendardFont.className} dark max-w-full antialiased`}
-      >
+      <body className={`${geistMono.variable} dark max-w-full antialiased`}>
         <SidebarProvider defaultOpen={defaultOpen}>
           <AppSidebar />
           <SidebarInset>
