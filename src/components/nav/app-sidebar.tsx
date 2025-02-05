@@ -17,7 +17,7 @@ import {
   LayoutDashboard,
   MessageCircle,
   CodeXml,
-  Settings
+  Settings,
 } from "lucide-react"
 
 const items = [
