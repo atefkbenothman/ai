@@ -1,8 +1,7 @@
 import { z } from "zod"
 
-export type ObjectSchemaType = "snippets" | "pull-request"
 
-/* Code Snippets Schema */
+/* Schemas */
 export const codeSnippetSchema = z.object({
   snippets: z.array(
     z.object({
@@ -16,9 +15,7 @@ export const codeSnippetSchema = z.object({
   ),
 })
 
-export type CodeSnippetSchema = z.infer<typeof codeSnippetSchema>
 
-/* Github Pull Request Schema */
 export const ghPullRequestSchema = z.object({
   title: z.string().describe("descriptive title of the changes"),
   body: z
@@ -36,9 +33,35 @@ export const ghPullRequestSchema = z.object({
   ),
 })
 
+
+export type CodeSnippetSchema = z.infer<typeof codeSnippetSchema>
 export type GHPullRequestSchema = z.infer<typeof ghPullRequestSchema>
 
-export const SCHEMA: Record<ObjectSchemaType, z.ZodSchema> = {
-  snippets: codeSnippetSchema,
-  "pull-request": ghPullRequestSchema,
+export type ObjectSchemaType = "snippets" | "pull-request"
+
+type ObjectSchema = {
+  id: string
+  name: string
+  type: ObjectSchemaType
+  description: string
+  schema: z.ZodSchema
 }
+
+export const objectSchemas: Array<ObjectSchema> = [
+  {
+    id: "code-snippets",
+    name: "code snippets",
+    type: "snippets",
+    description: "generate code snippets for a given topic",
+    schema: codeSnippetSchema
+  },
+  {
+    id: "pull-request",
+    name: "pull request",
+    type: "pull-request",
+    description: "generate a pull request in a codebase",
+    schema: ghPullRequestSchema
+  },
+]
+
+export const DEFAULT_CHAT_SCHEMA: ObjectSchemaType = "snippets"

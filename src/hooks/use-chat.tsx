@@ -3,18 +3,31 @@
 import { CoreMessage } from "ai"
 import { useEffect, useState } from "react"
 import { chat, getObject } from "@/server/ai/actions"
-import { ObjectSchemaType } from "@/lib/schemas"
+import { ObjectSchemaType } from "@/lib/ai/schemas"
+import { ChatCategory } from "@/lib/ai/chat-types"
 
-export type ChatType = "chat" | "object"
 
-export function useChat() {
-  const [messages, setMessages] = useState<CoreMessage[]>([])
-  const [chatType, setChatType] = useState<ChatType>("object")
-  const [schemaType, setSchemaType] = useState<ObjectSchemaType>("snippets")
+type ChatOptions = {
+  initialMessages?: CoreMessage[]
+  initialChatType?: ChatCategory
+  initialSchemaType?: ObjectSchemaType
+}
+
+
+export function useChat(options: ChatOptions = {}) {
+  const {
+    initialMessages = [],
+    initialChatType = "object",
+    initialSchemaType = "snippets"
+  } = options
+
+  const [messages, setMessages] = useState<CoreMessage[]>(initialMessages)
+  const [chatType, setChatType] = useState<ChatCategory>(initialChatType)
+  const [schemaType, setSchemaType] = useState<ObjectSchemaType>(initialSchemaType)
 
   useEffect(() => {
-    const lastMessage = messages.at(-1)
     // if last message was created by the user, generate response from ai
+    const lastMessage = messages.at(-1)
     if (lastMessage?.role === "user") {
       switch (chatType) {
         case "chat":
@@ -34,8 +47,7 @@ export function useChat() {
 
   const sendChat = async (messages: CoreMessage[]) => {
     try {
-      // add empty message
-      // we will update the content of this message with streamed output from ai
+      // add empty message, we will update the content of this message with streamed output from ai
       addMessage({ role: "assistant", content: "" })
       // get streamed response from ai
       let fullResponse = ""
@@ -71,8 +83,7 @@ export function useChat() {
     schemaType: ObjectSchemaType,
   ) => {
     try {
-      // add empty message
-      // we will update the content of this message with streamed output from ai
+      // add empty message, we will update the content of this message with streamed output from ai
       addMessage({ role: "assistant", content: "" })
       // get streamed response from ai
       const { success, stream } = await getObject(messages, schemaType)

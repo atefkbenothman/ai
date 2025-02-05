@@ -2,7 +2,7 @@
 
 import { AI } from "@atefkbenothman/ai-core"
 import { type CoreMessage } from "ai"
-import { SCHEMA, ObjectSchemaType } from "@/lib/schemas"
+import { objectSchemas, ObjectSchemaType } from "@/lib/ai/schemas"
 
 const apiKey = process.env.API_KEY ?? ""
 
@@ -43,10 +43,8 @@ export async function getObject(
   messages: CoreMessage[],
   schemaType: ObjectSchemaType,
 ): Promise<AIResponse> {
-  const { success, partialObjectStream, error } = await ai.streamCreateObject(
-    messages,
-    SCHEMA[schemaType],
-  )
+  const schema = objectSchemas.find((obj) => obj.type === schemaType)?.schema!
+  const { success, partialObjectStream, error } = await ai.streamCreateObject(messages, schema)
   const stream = new ReadableStream({
     async pull(controller) {
       try {
