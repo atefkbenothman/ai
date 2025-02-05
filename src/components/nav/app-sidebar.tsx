@@ -12,7 +12,13 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { Home, LayoutDashboard, MessageCircle, CodeXml } from "lucide-react"
+import {
+  Home,
+  LayoutDashboard,
+  MessageCircle,
+  CodeXml,
+  Settings
+} from "lucide-react"
 
 const items = [
   {
@@ -34,6 +40,11 @@ const items = [
     title: "Syntax",
     url: "/syntax",
     icon: CodeXml,
+  },
+  {
+    title: "Settings",
+    url: "/settings",
+    icon: Settings,
   },
 ]
 

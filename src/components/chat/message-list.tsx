@@ -7,12 +7,12 @@ import {
   CodeSnippetBlock,
   UserMessage,
 } from "@/components/chat/message"
-import { ChatType } from "@/hooks/use-chat"
-import { ObjectSchemaType } from "@/lib/schemas"
+import { ChatCategory } from "@/lib/ai/chat-types"
+import { ObjectSchemaType } from "@/lib/ai/schemas"
 
 type MessageListProps = {
   messages: CoreMessage[]
-  chatType: ChatType
+  chatType: ChatCategory
   schemaType: ObjectSchemaType
 }
 
@@ -25,22 +25,7 @@ export function MessageList({
   const endRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const container = containerRef.current
-    const end = endRef.current
-
-    if (container && end) {
-      const observer = new MutationObserver(() => {
-        end.scrollIntoView({ behavior: "instant", block: "end" })
-      })
-      observer.observe(container, {
-        childList: true,
-        subtree: true,
-        attributes: true,
-        characterData: true,
-      })
-
-      return () => observer.disconnect()
-    }
+    endRef.current?.scrollIntoView({ behavior: "instant", block: "end" })
   }, [messages])
 
   return (
