@@ -1,4 +1,4 @@
-export type ChatCategory  = "chat" | "object"
+export type ChatCategory = "chat" | "object"
 
 export type ChatType = {
   id: string
@@ -12,14 +12,12 @@ export const chatTypes: Array<ChatType> = [
     id: "chat",
     name: "chat",
     type: "chat",
-    description: "normal chat"
+    description: "normal chat",
   },
   {
     id: "object",
     name: "object",
     type: "object",
-    description: "generate strutured object"
-  }
-]
-
-export const DEFAULT_CHAT_TYPE: ChatCategory = "chat"
+    description: "generate strutured object",
+  },
+] as const

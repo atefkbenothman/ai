@@ -1,29 +1,25 @@
 "use client"
 
 import { CoreMessage } from "ai"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { chat, getObject } from "@/server/ai/actions"
 import { ObjectSchemaType } from "@/lib/ai/schemas"
-import { ChatCategory } from "@/lib/ai/chat-types"
+import { useChatStore } from "@/lib/stores/use-chat-store"
 
-
-type ChatOptions = {
-  initialMessages?: CoreMessage[]
-  initialChatType?: ChatCategory
-  initialSchemaType?: ObjectSchemaType
-}
-
-
-export function useChat(options: ChatOptions = {}) {
+export function useChat() {
   const {
-    initialMessages = [],
-    initialChatType = "object",
-    initialSchemaType = "snippets"
-  } = options
-
-  const [messages, setMessages] = useState<CoreMessage[]>(initialMessages)
-  const [chatType, setChatType] = useState<ChatCategory>(initialChatType)
-  const [schemaType, setSchemaType] = useState<ObjectSchemaType>(initialSchemaType)
+    model,
+    messages,
+    chatType,
+    schemaType,
+    // isProcessing,
+    // setMessages,
+    addMessage,
+    updateLastMessage,
+    setChatType,
+    setSchemaType,
+    // setIsProcessing
+  } = useChatStore()
 
   useEffect(() => {
     // if last message was created by the user, generate response from ai
@@ -41,15 +37,9 @@ export function useChat(options: ChatOptions = {}) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages])
 
-  const addMessage = (message: CoreMessage) => {
-    setMessages((prevMessages) => [...prevMessages, message])
-  }
-
   const sendChat = async (messages: CoreMessage[]) => {
     try {
-      // add empty message, we will update the content of this message with streamed output from ai
       addMessage({ role: "assistant", content: "" })
-      // get streamed response from ai
       let fullResponse = ""
       const { success, stream } = await chat(messages)
       if (success && stream) {
@@ -60,21 +50,11 @@ export function useChat(options: ChatOptions = {}) {
             break
           }
           fullResponse += value
-          setMessages((prevMessages) => {
-            const allMessages = prevMessages.slice(0, -1)
-            allMessages.push({ role: "assistant", content: fullResponse })
-            return allMessages
-          })
+          updateLastMessage(fullResponse)
         }
       }
     } catch (err) {
-      setMessages((prevMessages) => [
-        ...prevMessages.slice(0, -1),
-        {
-          role: "assistant",
-          content: `I encountered an error with your request: \n${err}`,
-        },
-      ])
+      updateLastMessage(`I encountered an error with your request: \n${err}`)
     }
   }
 
@@ -83,9 +63,7 @@ export function useChat(options: ChatOptions = {}) {
     schemaType: ObjectSchemaType,
   ) => {
     try {
-      // add empty message, we will update the content of this message with streamed output from ai
       addMessage({ role: "assistant", content: "" })
-      // get streamed response from ai
       const { success, stream } = await getObject(messages, schemaType)
       if (success && stream) {
         const reader = stream.getReader()
@@ -95,25 +73,16 @@ export function useChat(options: ChatOptions = {}) {
             break
           }
           const parsedResponse = value
-          setMessages((prevMessages) => {
-            const allMessages = prevMessages.slice(0, -1)
-            allMessages.push({ role: "assistant", content: parsedResponse })
-            return allMessages
-          })
+          updateLastMessage(parsedResponse)
         }
       }
     } catch (err) {
-      setMessages((prevMessages) => [
-        ...prevMessages.slice(0, -1),
-        {
-          role: "assistant",
-          content: `I encountered an error with your request: \n${err}`,
-        },
-      ])
+      updateLastMessage(`I encountered an error with your request: \n${err}`)
     }
   }
 
   return {
+    model,
     messages,
     addMessage,
     chatType,

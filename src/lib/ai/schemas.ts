@@ -1,6 +1,5 @@
 import { z } from "zod"
 
-
 /* Schemas */
 export const codeSnippetSchema = z.object({
   snippets: z.array(
@@ -14,7 +13,6 @@ export const codeSnippetSchema = z.object({
     }),
   ),
 })
-
 
 export const ghPullRequestSchema = z.object({
   title: z.string().describe("descriptive title of the changes"),
@@ -32,7 +30,6 @@ export const ghPullRequestSchema = z.object({
     }),
   ),
 })
-
 
 export type CodeSnippetSchema = z.infer<typeof codeSnippetSchema>
 export type GHPullRequestSchema = z.infer<typeof ghPullRequestSchema>
@@ -53,15 +50,13 @@ export const objectSchemas: Array<ObjectSchema> = [
     name: "code snippets",
     type: "snippets",
     description: "generate code snippets for a given topic",
-    schema: codeSnippetSchema
+    schema: codeSnippetSchema,
   },
   {
     id: "pull-request",
     name: "pull request",
     type: "pull-request",
     description: "generate a pull request in a codebase",
-    schema: ghPullRequestSchema
+    schema: ghPullRequestSchema,
   },
-]
-
-export const DEFAULT_CHAT_SCHEMA: ObjectSchemaType = "snippets"
+] as const
