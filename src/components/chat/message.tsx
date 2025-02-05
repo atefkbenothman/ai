@@ -65,8 +65,10 @@ export function CodeSnippetBlock({ message, schemaType }: ObjectMessageProps) {
   let data
 
   if (message.content.length > 0) {
-    const schema = objectSchemas.find((obj) => obj.type === schemaType)?.schema!
     try {
+      const schema = objectSchemas.find(
+        (obj) => obj.type === schemaType,
+      )!.schema
       const jsonData = JSON.parse(message.content as string)
       const parsedContent = schema.parse(jsonData)
       data = parsedContent as z.infer<typeof schema>

@@ -43,8 +43,11 @@ export async function getObject(
   messages: CoreMessage[],
   schemaType: ObjectSchemaType,
 ): Promise<AIResponse> {
-  const schema = objectSchemas.find((obj) => obj.type === schemaType)?.schema!
-  const { success, partialObjectStream, error } = await ai.streamCreateObject(messages, schema)
+  const schema = objectSchemas.find((obj) => obj.type === schemaType)!.schema
+  const { success, partialObjectStream, error } = await ai.streamCreateObject(
+    messages,
+    schema,
+  )
   const stream = new ReadableStream({
     async pull(controller) {
       try {

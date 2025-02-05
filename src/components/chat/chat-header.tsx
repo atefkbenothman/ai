@@ -4,14 +4,17 @@ import { MenuDropdown } from "@/components/chat/menu-dropdown"
 import { ObjectSchemaType } from "@/lib/ai/schemas"
 import { ChatCategory } from "@/lib/ai/chat-types"
 
-
 type ChatHeaderProps = {
   model: string
   setChatType: (chatType: ChatCategory) => void
   setSchemaType: (schemaType: ObjectSchemaType) => void
 }
 
-export function ChatHeader({ model, setChatType, setSchemaType }: ChatHeaderProps) {
+export function ChatHeader({
+  model,
+  setChatType,
+  setSchemaType,
+}: ChatHeaderProps) {
   return (
     <div className="flex items-center justify-between py-1">
       <div className="flex-1" />
