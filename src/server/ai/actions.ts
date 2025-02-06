@@ -3,11 +3,7 @@
 import { AI } from "@atefkbenothman/ai-core"
 import { type CoreMessage } from "ai"
 import { objectSchemas, ObjectSchemaType } from "@/lib/ai/schemas"
-
-const apiKey = process.env.API_KEY ?? ""
-
-// setup api model
-const ai = new AI("groq", "deepseek-r1-distill-llama-70b", apiKey)
+import { cookies } from "next/headers"
 
 export type AIResponse = {
   success: boolean
@@ -15,7 +11,20 @@ export type AIResponse = {
   error?: string
 }
 
+export async function setApiKey(apiKey: string) {
+  const cookieStore = await cookies()
+  cookieStore.set("api-key", apiKey, { httpOnly: true })
+}
+
+async function getApiKey() {
+  const cookieStore = await cookies()
+  const key = cookieStore.get("api-key")?.value
+  return key ?? ""
+}
+
 export async function chat(messages: CoreMessage[]): Promise<AIResponse> {
+  const apiKey = await getApiKey()
+  const ai = new AI("groq", "deepseek-r1-distill-llama-70b", apiKey)
   const { success, textStream, error } = await ai.streamChat(messages)
   const stream = new ReadableStream({
     async pull(controller) {
@@ -43,6 +52,8 @@ export async function getObject(
   messages: CoreMessage[],
   schemaType: ObjectSchemaType,
 ): Promise<AIResponse> {
+  const apiKey = await getApiKey()
+  const ai = new AI("groq", "deepseek-r1-distill-llama-70b", apiKey)
   const schema = objectSchemas.find((obj) => obj.type === schemaType)!.schema
   const { success, partialObjectStream, error } = await ai.streamCreateObject(
     messages,

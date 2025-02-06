@@ -2,18 +2,18 @@ import { create } from "zustand"
 import { ProviderConfig, ProviderName, providers } from "@/lib/ai/providers"
 
 type ApiKeyState = {
-  apiKey: string
-  providers: Record<string, ProviderConfig>
+  providers: Record<ProviderName, ProviderConfig>
   selectedProvider: ProviderName
-  updateProviderApiKey: (provider: string, key: string) => void
-  setSelectedProvider: (provider: string) => void
+  currentApiKey: string
+  updateApiKey: (provider: ProviderName, key: string) => void
+  setSelectedProvider: (provider: ProviderName) => void
 }
 
 export const useApiKeyStore = create<ApiKeyState>((set) => ({
-  providers,
+  providers: providers,
   selectedProvider: "Groq",
-  apiKey: providers["Groq"].apiKey,
-  updateProviderApiKey: (provider, key) =>
+  currentApiKey: providers["Groq"].apiKey,
+  updateApiKey: (provider, key) => {
     set((state) => ({
       providers: {
         ...state.providers,
@@ -22,11 +22,14 @@ export const useApiKeyStore = create<ApiKeyState>((set) => ({
           apiKey: key,
         },
       },
-      apiKey: key,
-    })),
-  setSelectedProvider: (selectedProvider) =>
+      // Update currentApiKey if this is the selected provider
+      currentApiKey:
+        provider === state.selectedProvider ? key : state.currentApiKey,
+    }))
+  },
+  setSelectedProvider: (provider) =>
     set((state) => ({
-      selectedProvider: selectedProvider,
-      apiKey: state.providers[selectedProvider].apiKey,
+      selectedProvider: provider,
+      currentApiKey: state.providers[provider].apiKey,
     })),
 }))

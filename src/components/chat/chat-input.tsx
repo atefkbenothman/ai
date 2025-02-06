@@ -5,12 +5,11 @@ import { CoreMessage } from "ai"
 import { AutoResizeTextArea } from "@/components/chat/autoresize-textarea"
 import { Button } from "@/components/ui/button"
 import { ArrowUpIcon } from "lucide-react"
+import { useChat } from "@/hooks/use-chat"
 
-type ChatInputProps = {
-  addMessage: (message: CoreMessage) => void
-}
+export function ChatInput() {
+  const { addMessage } = useChat()
 
-export function ChatInput({ addMessage }: ChatInputProps) {
   const [message, setMessage] = useState<string>("")
 
   const handleKeyDown = (e: React.KeyboardEvent) => {

@@ -1,26 +1,20 @@
 "use client"
 
 import { MenuDropdown } from "@/components/chat/menu-dropdown"
-import { ObjectSchemaType } from "@/lib/ai/schemas"
-import { ChatCategory } from "@/lib/ai/chat-types"
+import { useChat } from "@/hooks/use-chat"
 
-type ChatHeaderProps = {
-  model: string
-  setChatType: (chatType: ChatCategory) => void
-  setSchemaType: (schemaType: ObjectSchemaType) => void
-}
+export function ChatHeader() {
+  const { model, chatType } = useChat()
 
-export function ChatHeader({
-  model,
-  setChatType,
-  setSchemaType,
-}: ChatHeaderProps) {
   return (
     <div className="flex items-center justify-between py-1">
-      <div className="flex-1" />
-      <p className="text-md font-semibold">{model}</p>
-      <div className="mr-2 flex flex-1 justify-end">
-        <MenuDropdown setChatType={setChatType} setSchemaType={setSchemaType} />
+      <div className="ml-2 flex-1 items-center" />
+      <div className="flex flex-row items-center justify-center gap-2">
+        <p className="text-md font-semibold">{model}</p>
+        <p className="text-xs font-medium text-white/80">[{chatType}]</p>
+      </div>
+      <div className="mr-2 flex flex-1 items-center justify-end">
+        <MenuDropdown />
       </div>
     </div>
   )

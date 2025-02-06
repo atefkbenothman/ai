@@ -1,5 +1,5 @@
-import { type ChatCategory, chatTypes, ChatType } from "@/lib/ai/chat-types"
-import { objectSchemas, ObjectSchemaType } from "@/lib/ai/schemas"
+import { chatTypes, ChatType } from "@/lib/ai/chat-types"
+import { objectSchemas } from "@/lib/ai/schemas"
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -13,17 +13,38 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { Menu, ChevronLeft } from "lucide-react"
 import { useState } from "react"
+import { useChat } from "@/hooks/use-chat"
+import { ObjectSchema } from "@/lib/ai/schemas"
 
-function ObjectMenuItem({ text }: { text: string }) {
+function ObjectMenuItem({ schema }: { schema: ObjectSchema }) {
+  const { setSchemaType, setChatType, schemaType, chatType } = useChat()
   return (
-    <DropdownMenuItem className="flex flex-row items-center justify-between gap-4 rounded-sm px-1 py-0.5 hover:bg-accent">
-      <Checkbox className="size-3 rounded-2xl border border-blue-600 shadow-none hover:cursor-pointer data-[state=checked]:bg-blue-600 dark:data-[state=unchecked]:border-white/90" />
-      <Label>{text}</Label>
+    <DropdownMenuItem
+      className="flex flex-row items-center justify-between gap-4 rounded-sm px-1 py-0.5 hover:bg-accent"
+      onSelect={(e) => e.preventDefault()}
+    >
+      <Checkbox
+        className="size-3 rounded-2xl border shadow-none hover:cursor-pointer data-[state=checked]:bg-blue-600 dark:data-[state=unchecked]:border-white/90"
+        onClick={() => {
+          setSchemaType(schema.type)
+          setChatType("object")
+        }}
+        checked={schema.type === schemaType && chatType === "object"}
+      />
+      <Label>{schema.name}</Label>
     </DropdownMenuItem>
   )
 }
 
-function ChatTypeItem({ chatType }: { chatType: ChatType }) {
+type ChatTypeItemProps = {
+  chatType: ChatType
+}
+
+function ChatTypeItem({ chatType }: ChatTypeItemProps) {
+  const { chatType: selectedChatType, setChatType } = useChat()
+
+  console.log("selected chat type", selectedChatType)
+
   if (chatType.type === "object") {
     return (
       <DropdownMenuSub>
@@ -33,26 +54,28 @@ function ChatTypeItem({ chatType }: { chatType: ChatType }) {
         </DropdownMenuSubTrigger>
         <DropdownMenuSubContent className="dark space-y-1 rounded-sm border border-white/30 bg-[#121212] p-1 text-xs text-white">
           {objectSchemas.map((schema) => (
-            <ObjectMenuItem key={schema.id} text={schema.name} />
+            <ObjectMenuItem key={schema.id} schema={schema} />
           ))}
         </DropdownMenuSubContent>
       </DropdownMenuSub>
     )
   }
   return (
-    <DropdownMenuItem className="flex flex-row items-center justify-between gap-4 rounded-sm px-1 py-0.5 hover:bg-accent">
-      <Checkbox className="size-3 rounded-2xl border border-blue-600 shadow-none hover:cursor-pointer data-[state=checked]:bg-blue-600 dark:data-[state=unchecked]:border-white/90" />
+    <DropdownMenuItem
+      className="flex flex-row items-center justify-between gap-4 rounded-sm px-1 py-0.5 hover:bg-accent"
+      onSelect={(e) => e.preventDefault()}
+    >
+      <Checkbox
+        onClick={() => setChatType(chatType.type)}
+        className="size-3 rounded-2xl border shadow-none hover:cursor-pointer data-[state=checked]:bg-blue-600 dark:data-[state=unchecked]:border-white/90"
+        checked={selectedChatType === chatType.type}
+      />
       <Label>{chatType.name}</Label>
     </DropdownMenuItem>
   )
 }
 
-type MenuDropdownProps = {
-  setChatType?: (chatType: ChatCategory) => void
-  setSchemaType?: (schemaType: ObjectSchemaType) => void
-}
-
-export function MenuDropdown({}: MenuDropdownProps) {
+export function MenuDropdown() {
   const [open, setOpen] = useState(false)
 
   return (

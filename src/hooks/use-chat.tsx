@@ -7,19 +7,14 @@ import { ObjectSchemaType } from "@/lib/ai/schemas"
 import { useChatStore } from "@/lib/stores/use-chat-store"
 
 export function useChat() {
-  const {
-    model,
-    messages,
-    chatType,
-    schemaType,
-    // isProcessing,
-    // setMessages,
-    addMessage,
-    updateLastMessage,
-    setChatType,
-    setSchemaType,
-    // setIsProcessing
-  } = useChatStore()
+  const model = useChatStore((state) => state.model)
+  const messages = useChatStore((state) => state.messages)
+  const chatType = useChatStore((state) => state.chatType)
+  const schemaType = useChatStore((state) => state.schemaType)
+  const addMessage = useChatStore((state) => state.addMessage)
+  const updateLastMessage = useChatStore((state) => state.updateLastMessage)
+  const setChatType = useChatStore((state) => state.setChatType)
+  const setSchemaType = useChatStore((state) => state.setSchemaType)
 
   useEffect(() => {
     // if last message was created by the user, generate response from ai

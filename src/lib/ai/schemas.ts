@@ -36,7 +36,7 @@ export type GHPullRequestSchema = z.infer<typeof ghPullRequestSchema>
 
 export type ObjectSchemaType = "snippets" | "pull-request"
 
-type ObjectSchema = {
+export type ObjectSchema = {
   id: string
   name: string
   type: ObjectSchemaType

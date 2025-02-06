@@ -1,26 +1,16 @@
 "use client"
 
-import { type CoreMessage } from "ai"
 import { useEffect, useRef } from "react"
 import {
   AssistantMessage,
   CodeSnippetBlock,
   UserMessage,
 } from "@/components/chat/message"
-import { ChatCategory } from "@/lib/ai/chat-types"
-import { ObjectSchemaType } from "@/lib/ai/schemas"
+import { useChat } from "@/hooks/use-chat"
 
-type MessageListProps = {
-  messages: CoreMessage[]
-  chatType: ChatCategory
-  schemaType: ObjectSchemaType
-}
+export function MessageList() {
+  const { messages, chatType, schemaType } = useChat()
 
-export function MessageList({
-  messages,
-  chatType,
-  schemaType,
-}: MessageListProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const endRef = useRef<HTMLDivElement>(null)
 
