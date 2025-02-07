@@ -1,36 +1,48 @@
 "use client"
 
 import { CoreMessage } from "ai"
-import { useEffect } from "react"
 import { chat, getObject } from "@/server/ai/actions"
 import { ObjectSchemaType } from "@/lib/ai/schemas"
 import { useChatStore } from "@/lib/stores/use-chat-store"
+import { useShallow } from "zustand/react/shallow"
 
 export function useChat() {
-  const model = useChatStore((state) => state.model)
-  const messages = useChatStore((state) => state.messages)
-  const chatType = useChatStore((state) => state.chatType)
-  const schemaType = useChatStore((state) => state.schemaType)
-  const addMessage = useChatStore((state) => state.addMessage)
-  const updateLastMessage = useChatStore((state) => state.updateLastMessage)
-  const setChatType = useChatStore((state) => state.setChatType)
-  const setSchemaType = useChatStore((state) => state.setSchemaType)
+  const {
+    model,
+    messages,
+    chatType,
+    schemaType,
+    addMessage,
+    updateLastMessage,
+    setChatType,
+    setSchemaType,
+  } = useChatStore(
+    useShallow((state) => ({
+      model: state.model,
+      messages: state.messages,
+      chatType: state.chatType,
+      schemaType: state.schemaType,
+      addMessage: state.addMessage,
+      updateLastMessage: state.updateLastMessage,
+      setChatType: state.setChatType,
+      setSchemaType: state.setSchemaType,
+    }))
+  )
 
-  useEffect(() => {
-    // if last message was created by the user, generate response from ai
-    const lastMessage = messages.at(-1)
-    if (lastMessage?.role === "user") {
+  const handleAddMessage = (message: CoreMessage) => {
+    addMessage(message)
+    const newMessages = [...messages, message]
+    if (message.role === "user") {
       switch (chatType) {
         case "chat":
-          sendChat(messages)
+          sendChat(newMessages)
           break
         case "object":
-          sendObject(messages, schemaType)
+          sendObject(newMessages, schemaType)
           break
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [messages])
+  }
 
   const sendChat = async (messages: CoreMessage[]) => {
     try {
@@ -79,7 +91,7 @@ export function useChat() {
   return {
     model,
     messages,
-    addMessage,
+    handleAddMessage,
     chatType,
     setChatType,
     schemaType,

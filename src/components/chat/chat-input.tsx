@@ -8,7 +8,7 @@ import { ArrowUpIcon } from "lucide-react"
 import { useChat } from "@/hooks/use-chat"
 
 export function ChatInput() {
-  const { addMessage } = useChat()
+  const { handleAddMessage } = useChat()
 
   const [message, setMessage] = useState<string>("")
 
@@ -25,7 +25,8 @@ export function ChatInput() {
       setMessage("")
       return
     }
-    addMessage({ role: "user", content: message } as CoreMessage)
+    const coreMessage = { role: "user", content: message } as CoreMessage
+    handleAddMessage(coreMessage)
     setMessage("")
   }
 
