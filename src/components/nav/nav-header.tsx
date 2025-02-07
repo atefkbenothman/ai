@@ -11,7 +11,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 
-export default function NavHeader() {
+export function NavHeader() {
   const pathname = usePathname()
   return (
     <header className="flex h-12 shrink-0 items-center gap-2 font-[family-name:var(--font-geist-mono)] transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
