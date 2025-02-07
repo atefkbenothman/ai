@@ -4,6 +4,7 @@ import { Geist_Mono } from "next/font/google"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/nav/app-sidebar"
 import { NavHeader } from "@/components/nav/nav-header"
+import { CommandMenu } from "@/components/command-menu"
 import { Toaster } from "sonner"
 import "./globals.css"
 
@@ -39,12 +40,13 @@ export default async function RootLayout({
       </head> */}
       <body className={`${geistMono.variable} dark max-w-full antialiased`}>
         <SidebarProvider defaultOpen={defaultOpen}>
-          <Toaster position="bottom-right" className="font-2xl" />
           <AppSidebar />
+          <CommandMenu />
           <SidebarInset>
             <NavHeader />
             <main>{children}</main>
           </SidebarInset>
+          <Toaster position="bottom-right" />
         </SidebarProvider>
       </body>
     </html>
