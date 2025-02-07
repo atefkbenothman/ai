@@ -1,11 +1,11 @@
-import { cookies } from "next/headers"
 import type { Metadata, Viewport } from "next"
+import { cookies } from "next/headers"
 import { Geist_Mono } from "next/font/google"
-import "./globals.css"
-
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/nav/app-sidebar"
-import NavHeader from "@/components/nav/nav-header"
+import { NavHeader } from "@/components/nav/nav-header"
+import { Toaster } from "sonner"
+import "./globals.css"
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -39,6 +39,7 @@ export default async function RootLayout({
       </head> */}
       <body className={`${geistMono.variable} dark max-w-full antialiased`}>
         <SidebarProvider defaultOpen={defaultOpen}>
+          <Toaster position="bottom-right" className="font-2xl" />
           <AppSidebar />
           <SidebarInset>
             <NavHeader />
