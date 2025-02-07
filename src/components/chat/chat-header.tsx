@@ -1,13 +1,13 @@
 "use client"
 
 import { memo } from "react"
-import { MenuDropdown } from "@/components/chat/menu-dropdown"
-import { useChatStore } from "@/lib/stores/use-chat-store"
+import { ChatPreferencesMenu } from "@/components/chat/chat-preferences-dropdown"
+import { useChat } from "@/lib/stores/chat-store"
 import { useShallow } from "zustand/react/shallow"
 
 export const ChatHeader = memo(function ChatHeader() {
-  const model = useChatStore(useShallow((state) => state.model))
-  const chatType = useChatStore(useShallow((state) => state.chatType))
+  const model = useChat(useShallow((state) => state.model))
+  const chatType = useChat(useShallow((state) => state.chatType))
 
   return (
     <div className="flex items-center justify-between py-1">
@@ -17,7 +17,7 @@ export const ChatHeader = memo(function ChatHeader() {
         <p className="text-md font-medium text-white/80">[{chatType}]</p>
       </div>
       <div className="mr-2 flex flex-1 items-center justify-end">
-        <MenuDropdown />
+        <ChatPreferencesMenu />
       </div>
     </div>
   )

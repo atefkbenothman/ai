@@ -9,7 +9,7 @@ type ApiKeyState = {
   setSelectedProvider: (provider: ProviderName) => void
 }
 
-export const useApiKeyStore = create<ApiKeyState>((set) => ({
+export const useSettings = create<ApiKeyState>((set) => ({
   providers: providers,
   selectedProvider: "Groq",
   currentApiKey: providers["Groq"].apiKey,

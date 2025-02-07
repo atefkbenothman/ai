@@ -7,10 +7,10 @@ import {
   CodeSnippetBlock,
   UserMessage,
 } from "@/components/chat/message"
-import { useChatStore } from "@/lib/stores/use-chat-store"
+import { useChat } from "@/lib/stores/chat-store"
 
 export function MessageList() {
-  const { messages, chatType, schemaType } = useChatStore(
+  const { messages, chatType, schemaType } = useChat(
     useShallow((state) => ({
       messages: state.messages,
       chatType: state.chatType,

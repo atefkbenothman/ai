@@ -63,7 +63,7 @@ async function sendObject(
   }
 }
 
-export const useChatStore = create<ChatState>((set, get) => ({
+export const useChat = create<ChatState>((set, get) => ({
   messages: [],
   chatType: "chat",
   schemaType: "snippets",

@@ -1,15 +1,15 @@
 "use client"
 
-import { useState, memo } from "react"
+import { useState } from "react"
 import { CoreMessage } from "ai"
 import { AutoResizeTextArea } from "@/components/chat/autoresize-textarea"
 import { Button } from "@/components/ui/button"
 import { ArrowUpIcon } from "lucide-react"
-import { useChatStore } from "@/lib/stores/use-chat-store"
+import { useChat } from "@/lib/stores/chat-store"
 import { useShallow } from "zustand/react/shallow"
 
 export function ChatInput() {
-  const handleAddMessage = useChatStore(
+  const handleAddMessage = useChat(
     useShallow((state) => state.handleAddMessage),
   )
 
