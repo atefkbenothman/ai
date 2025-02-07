@@ -10,13 +10,13 @@ export type ChatType = {
 export const chatTypes: Array<ChatType> = [
   {
     id: "chat",
-    name: "chat",
+    name: "normal",
     type: "chat",
     description: "normal chat",
   },
   {
     id: "object",
-    name: "object",
+    name: "schemas",
     type: "object",
     description: "generate strutured object",
   },

@@ -1,15 +1,22 @@
 "use client"
 
 import { useEffect, useRef } from "react"
+import { useShallow } from "zustand/react/shallow"
 import {
   AssistantMessage,
   CodeSnippetBlock,
   UserMessage,
 } from "@/components/chat/message"
-import { useChat } from "@/hooks/use-chat"
+import { useChatStore } from "@/lib/stores/use-chat-store"
 
 export function MessageList() {
-  const { messages, chatType, schemaType } = useChat()
+  const { messages, chatType, schemaType } = useChatStore(
+    useShallow((state) => ({
+      messages: state.messages,
+      chatType: state.chatType,
+      schemaType: state.schemaType,
+    })),
+  )
 
   const containerRef = useRef<HTMLDivElement>(null)
   const endRef = useRef<HTMLDivElement>(null)
