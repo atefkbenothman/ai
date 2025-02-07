@@ -69,7 +69,6 @@ export const useChat = create<ChatState>((set, get) => ({
   schemaType: "snippets",
   model: "Groq",
   addMessage: (message) => {
-    console.log("Adding message:", message)
     set((state) => ({ messages: [...state.messages, message] }))
   },
   updateLastMessage: (content) =>

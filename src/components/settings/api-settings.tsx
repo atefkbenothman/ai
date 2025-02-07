@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useSettings } from "@/lib/stores/settings-store"
 import { setApiKey } from "@/server/ai/actions"
-import { useEffect } from "react"
+// import { useEffect } from "react"
 import { useShallow } from "zustand/react/shallow"
 import { toast } from "sonner"
 
@@ -16,9 +16,9 @@ export function ApiSettings() {
   )
   const updateApiKey = useSettings(useShallow((state) => state.updateApiKey))
 
-  useEffect(() => {
-    console.log("RENDERED")
-  }, [currentApiKey])
+  // useEffect(() => {
+  //   console.log("RENDERED")
+  // }, [currentApiKey])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

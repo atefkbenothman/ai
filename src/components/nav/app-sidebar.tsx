@@ -12,13 +12,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import {
-  Home,
-  LayoutDashboard,
-  MessageCircle,
-  CodeXml,
-  Settings,
-} from "lucide-react"
+import { Home, MessageCircle, Settings } from "lucide-react"
 
 const items = [
   {
@@ -27,19 +21,9 @@ const items = [
     icon: Home,
   },
   {
-    title: "Dashboard",
-    url: "/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
     title: "Chat",
     url: "/chat",
     icon: MessageCircle,
-  },
-  {
-    title: "Syntax",
-    url: "/syntax",
-    icon: CodeXml,
   },
   {
     title: "Settings",
