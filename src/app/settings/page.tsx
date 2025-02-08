@@ -1,6 +1,6 @@
 "use server"
 
-import { PageContent } from "@/components/containers/page-content"
+import { PageContent } from "@/components/page-content"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ApiSettings } from "@/components/settings/api-settings"
 

@@ -1,4 +1,4 @@
-import { PageContent } from "@/components/containers/page-content"
+import { PageContent } from "@/components/page-content"
 
 export default function Home() {
   return (
