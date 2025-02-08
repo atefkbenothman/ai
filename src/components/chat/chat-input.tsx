@@ -4,7 +4,7 @@ import { useState } from "react"
 import { CoreMessage } from "ai"
 import { AutoResizeTextArea } from "@/components/chat/autoresize-textarea"
 import { Button } from "@/components/ui/button"
-import { ArrowUpIcon } from "lucide-react"
+import { Mic } from "lucide-react"
 import { useChat } from "@/lib/stores/chat-store"
 import { useShallow } from "zustand/react/shallow"
 
@@ -33,6 +33,11 @@ export function ChatInput() {
     setMessage("")
   }
 
+  const handleToggleMic = (e: React.MouseEvent) => {
+    e.preventDefault()
+    console.log("Mic toggled")
+  }
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -52,9 +57,9 @@ export function ChatInput() {
         variant="ghost"
         size="sm"
         className="absolute bottom-1.5 right-1 size-6 rounded-sm"
-        type="submit"
+        onClick={handleToggleMic}
       >
-        <ArrowUpIcon size={16} />
+        <Mic size={16} />
       </Button>
     </form>
   )
