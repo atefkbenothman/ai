@@ -2,10 +2,10 @@ import { create } from "zustand"
 import { CoreMessage } from "ai"
 import { chat, getObject } from "@/server/ai/actions"
 import { ObjectSchemaType } from "@/lib/ai/schemas"
-import { ChatCategory } from "../ai/chat-types"
+import { ChatCategory, CoreMessageExtras } from "@/lib/ai/chat-types"
 
 type ChatState = {
-  messages: CoreMessage[]
+  messages: CoreMessageExtras[]
   chatType: ChatCategory
   schemaType: ObjectSchemaType
   model: string
@@ -64,18 +64,28 @@ async function sendObject(
 }
 
 export const useChat = create<ChatState>((set, get) => ({
-  messages: [],
-  chatType: "chat",
-  schemaType: "snippets",
+  messages: [] as CoreMessageExtras[],
+  chatType: "chat" as ChatCategory,
+  schemaType: "snippets" as ObjectSchemaType,
   model: "Groq",
   addMessage: (message) => {
-    set((state) => ({ messages: [...state.messages, message] }))
+    set((state) => ({
+      messages: [
+        ...state.messages,
+        { ...message, chatType: state.chatType, schemaType: state.schemaType },
+      ],
+    }))
   },
   updateLastMessage: (content) =>
     set((state) => ({
       messages: state.messages.map((msg, index) =>
         index === state.messages.length - 1
-          ? { role: "assistant", content: content }
+          ? {
+              role: "assistant",
+              content: content,
+              chatType: state.chatType,
+              schemaType: state.schemaType,
+            }
           : msg,
       ),
     })),

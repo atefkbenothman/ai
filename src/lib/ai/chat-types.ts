@@ -1,4 +1,12 @@
+import { type CoreMessage } from "ai"
+import { ObjectSchemaType } from "./schemas"
+
 export type ChatCategory = "chat" | "object"
+
+export type CoreMessageExtras = CoreMessage & {
+  chatType: ChatCategory
+  schemaType: ObjectSchemaType
+}
 
 export type ChatType = {
   id: string

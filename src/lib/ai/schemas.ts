@@ -1,4 +1,6 @@
 import { z } from "zod"
+import { ComponentType } from "react"
+import { CodeSnippetBlock } from "@/components/blocks/code-snippet-block"
 
 /* Schemas */
 export const codeSnippetSchema = z.object({
@@ -42,21 +44,25 @@ export type ObjectSchema = {
   type: ObjectSchemaType
   description: string
   schema: z.ZodSchema
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  component: ComponentType<any>
 }
 
-export const objectSchemas: Array<ObjectSchema> = [
+export const objectSchemas: ObjectSchema[] = [
   {
     id: "code-snippets",
     name: "code snippets",
     type: "snippets",
     description: "generate code snippets for a given topic",
     schema: codeSnippetSchema,
+    component: CodeSnippetBlock,
   },
-  {
-    id: "pull-request",
-    name: "pull request",
-    type: "pull-request",
-    description: "generate a pull request in a codebase",
-    schema: ghPullRequestSchema,
-  },
+  // {
+  //   id: "pull-request",
+  //   name: "pull request",
+  //   type: "pull-request",
+  //   description: "generate a pull request in a codebase",
+  //   schema: ghPullRequestSchema,
+  //   // component:
+  // },
 ] as const

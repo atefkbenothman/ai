@@ -1,26 +1,11 @@
-import { z } from "zod"
-import { CoreMessage } from "ai"
-import { objectSchemas, ObjectSchemaType } from "@/lib/ai/schemas"
-import { Prism } from "react-syntax-highlighter"
-import { gruvboxDark } from "react-syntax-highlighter/dist/esm/styles/prism"
+import { useCallback } from "react"
+import { CoreMessageExtras } from "@/lib/ai/chat-types"
+import { objectSchemas } from "@/lib/ai/schemas"
+import { LoadingAnimation } from "@/components/chat/loading-animation"
 import ReactMarkDown from "react-markdown"
 
-function LoadingAnimation() {
-  return (
-    <div className="flex items-center space-x-1 rounded-3xl px-1 py-1">
-      {[0, 1, 2].map((dot) => (
-        <div
-          key={dot}
-          className={`h-1.5 w-1.5 animate-bounce rounded-full bg-white/30`}
-          style={{ animationDelay: `${dot * 0.15}s` }}
-        />
-      ))}
-    </div>
-  )
-}
-
 type MessageProps = {
-  message: CoreMessage
+  message: CoreMessageExtras
   isLoading?: boolean
 }
 
@@ -40,66 +25,25 @@ export function UserMessage({ message }: MessageProps) {
 }
 
 export function AssistantMessage({ message }: MessageProps) {
+  const objectSchema = useCallback(() => {
+    return objectSchemas.find((schema) => schema.type === message.schemaType)!
+      .component
+  }, [message.schemaType])
+
+  const SchemaBlock = objectSchema()
+
   return (
     <div className="flex justify-start">
       <div className="max-w-2xl rounded-sm px-2 py-1.5 text-sm font-medium text-white/90 xl:max-w-3xl">
         {message.content.length === 0 ? (
           <LoadingAnimation />
-        ) : (
+        ) : message.chatType === "chat" ? (
           <ReactMarkDown className="overflow-x-scroll whitespace-pre-wrap text-sm tracking-wide">
             {message.content as string}
           </ReactMarkDown>
-        )}
-      </div>
-    </div>
-  )
-}
-
-type ObjectMessageProps = {
-  message: CoreMessage
-  schemaType: ObjectSchemaType
-  isLoading?: boolean
-}
-
-export function CodeSnippetBlock({ message, schemaType }: ObjectMessageProps) {
-  let data
-
-  if (message.content.length > 0) {
-    try {
-      const schema = objectSchemas.find(
-        (obj) => obj.type === schemaType,
-      )!.schema
-      const jsonData = JSON.parse(message.content as string)
-      const parsedContent = schema.parse(jsonData)
-      data = parsedContent as z.infer<typeof schema>
-    } catch {
-      data = null
-    }
-  }
-
-  return (
-    <div className="flex justify-start">
-      <div className="max-w-2xl flex-col rounded-sm px-2 py-1.5 text-sm font-medium text-white xl:max-w-3xl">
-        {message.content.length === 0 ? (
-          <LoadingAnimation />
-        ) : (
-          /* eslint-disable @typescript-eslint/no-explicit-any */
-          data &&
-          data.snippets.map((snippet: any, idx: number) => (
-            <Prism
-              key={idx}
-              language={snippet.language}
-              style={gruvboxDark}
-              customStyle={{
-                borderRadius: "3px",
-                fontSize: "0.75rem",
-              }}
-              wrapLongLines
-            >
-              {snippet.snippet}
-            </Prism>
-          ))
-        )}
+        ) : message.chatType === "object" ? (
+          <SchemaBlock message={message} schemaType={message.schemaType} />
+        ) : null}
       </div>
     </div>
   )
