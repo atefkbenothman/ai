@@ -10,7 +10,8 @@
     "lint:fix": "next lint --fix",
     "typecheck": "tsc --noEmit",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
-    "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache"
+    "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
+    "check": "npm run lint && npm run typecheck && npm run format:check"
   },
   "dependencies": {
     "@atefkbenothman/ai-core": "^1.1.0",
