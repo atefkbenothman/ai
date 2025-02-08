@@ -31,7 +31,7 @@ export function UserMessage({ message }: MessageProps) {
   return (
     <div className="flex justify-end">
       <div className="max-w-2xl rounded-sm bg-blue-600 p-2 text-sm font-medium xl:max-w-3xl">
-        <ReactMarkDown className="overflow-x-scroll whitespace-pre-wrap text-sm tracking-wide">
+        <ReactMarkDown className="overflow-x-scroll whitespace-pre-wrap text-sm tracking-wide text-white/90">
           {message.content as string}
         </ReactMarkDown>
       </div>
@@ -42,7 +42,7 @@ export function UserMessage({ message }: MessageProps) {
 export function AssistantMessage({ message }: MessageProps) {
   return (
     <div className="flex justify-start">
-      <div className="max-w-2xl rounded-sm bg-neutral-900 px-2 py-1.5 text-sm font-medium text-white xl:max-w-3xl">
+      <div className="max-w-2xl rounded-sm px-2 py-1.5 text-sm font-medium text-white/90 xl:max-w-3xl">
         {message.content.length === 0 ? (
           <LoadingAnimation />
         ) : (
@@ -79,7 +79,7 @@ export function CodeSnippetBlock({ message, schemaType }: ObjectMessageProps) {
 
   return (
     <div className="flex justify-start">
-      <div className="max-w-2xl flex-col rounded-sm bg-neutral-900 px-2 py-1.5 text-sm font-medium text-white xl:max-w-3xl">
+      <div className="max-w-2xl flex-col rounded-sm px-2 py-1.5 text-sm font-medium text-white xl:max-w-3xl">
         {message.content.length === 0 ? (
           <LoadingAnimation />
         ) : (
