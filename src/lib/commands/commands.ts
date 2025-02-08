@@ -1,5 +1,7 @@
-import { Link, LucideIcon } from "lucide-react"
+import { Link, LucideIcon, CodeXml } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { useChat } from "@/lib/stores/chat-store"
+import { chatModes } from "@/lib/ai/chat-modes"
 
 export type CommandItem = {
   id: string
@@ -15,11 +17,13 @@ export type CommandItem = {
 export const useCommands = () => {
   const router = useRouter()
 
+  const { setChatMode } = useChat()
+
   const commands: CommandItem[] = [
     {
       id: "home",
       name: "Home",
-      description: "navigate to the home page",
+      description: "Navigate to the home page",
       icon: Link,
       category: "navigation",
       keywords: ["home"],
@@ -28,7 +32,7 @@ export const useCommands = () => {
     {
       id: "chat",
       name: "Chat",
-      description: "navigate to the chat page",
+      description: "Navigate to the chat page",
       icon: Link,
       category: "navigation",
       keywords: ["chat"],
@@ -37,12 +41,21 @@ export const useCommands = () => {
     {
       id: "settings",
       name: "Settings",
-      description: "navigate to the settings page",
+      description: "Navigate to the settings page",
       icon: Link,
       category: "navigation",
       keywords: ["settings"],
       action: () => router.push("/settings"),
     },
+    ...chatModes.map((mode) => ({
+      id: `mode-${mode.id}`,
+      name: mode.name,
+      description: "Change the chat mode",
+      icon: CodeXml,
+      category: "chat-mode",
+      keywords: ["mode", "/mode", mode.name, mode.description],
+      action: () => setChatMode(mode.mode),
+    })),
   ]
 
   return { commands }

@@ -28,6 +28,21 @@ export const useCommandMenu = () => {
   }, [toggleMenu, reset])
 
   const filterCommands = (commands: CommandItem[]) => {
+    if (search.startsWith("/mode") || search.startsWith("mode")) {
+      const searchTerm = search
+        .replace(/^\/?mode/, "")
+        .trim()
+        .toLowerCase()
+      return commands.filter(
+        (command) =>
+          command.category === "chat-mode" &&
+          (command.name.toLowerCase().includes(searchTerm) ||
+            command.description.toLowerCase().includes(searchTerm) ||
+            command.keywords?.some((keyword) =>
+              keyword.toLowerCase().includes(searchTerm),
+            )),
+      )
+    }
     return commands.filter(
       (command) =>
         command.name.toLowerCase().includes(search.toLowerCase()) ||

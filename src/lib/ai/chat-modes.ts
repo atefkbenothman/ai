@@ -18,14 +18,14 @@ export type ChatMode = {
 export const chatModes: ChatMode[] = [
   {
     id: "chat",
-    name: "normal",
+    name: "Normal",
     mode: "chat",
-    description: "normal chat",
+    description: "Normal chat",
   },
   {
     id: "object",
-    name: "schemas",
+    name: "Schemas",
     mode: "object",
-    description: "generate strutured object",
+    description: "Generate strutured object",
   },
 ] as const
