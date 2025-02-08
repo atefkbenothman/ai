@@ -3,7 +3,7 @@ import { LoadingAnimation } from "@/components/chat/loading-animation"
 import { objectSchemas, ObjectSchemaType } from "@/lib/ai/schemas"
 import { Prism } from "react-syntax-highlighter"
 import { gruvboxDark } from "react-syntax-highlighter/dist/esm/styles/prism"
-import { CoreMessageExtras } from "@/lib/ai/chat-types"
+import { CoreMessageExtras } from "@/lib/ai/chat-modes"
 
 type ObjectMessageProps = {
   message: CoreMessageExtras

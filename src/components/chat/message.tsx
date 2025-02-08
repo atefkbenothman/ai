@@ -1,5 +1,5 @@
 import { useCallback } from "react"
-import { CoreMessageExtras } from "@/lib/ai/chat-types"
+import { CoreMessageExtras } from "@/lib/ai/chat-modes"
 import { objectSchemas } from "@/lib/ai/schemas"
 import { LoadingAnimation } from "@/components/chat/loading-animation"
 import ReactMarkDown from "react-markdown"
@@ -37,11 +37,11 @@ export function AssistantMessage({ message }: MessageProps) {
       <div className="max-w-2xl rounded-sm px-2 py-1.5 text-sm font-medium text-white/90 xl:max-w-3xl">
         {message.content.length === 0 ? (
           <LoadingAnimation />
-        ) : message.chatType === "chat" ? (
+        ) : message.chatMode === "chat" ? (
           <ReactMarkDown className="overflow-x-scroll whitespace-pre-wrap text-sm tracking-wide">
             {message.content as string}
           </ReactMarkDown>
-        ) : message.chatType === "object" ? (
+        ) : message.chatMode === "object" ? (
           <SchemaBlock message={message} schemaType={message.schemaType} />
         ) : null}
       </div>

@@ -1,4 +1,4 @@
-import { chatTypes, ChatType } from "@/lib/ai/chat-types"
+import { chatModes, ChatMode } from "@/lib/ai/chat-modes"
 import { objectSchemas } from "@/lib/ai/schemas"
 import {
   DropdownMenu,
@@ -18,9 +18,9 @@ import { useShallow } from "zustand/react/shallow"
 
 function ObjectMenuItem({ schema }: { schema: ObjectSchema }) {
   const selectedSchemaType = useChat(useShallow((state) => state.schemaType))
-  const selectedChatType = useChat(useShallow((state) => state.chatType))
+  const selectedChatMode = useChat(useShallow((state) => state.chatMode))
   const setSchemaType = useChat(useShallow((state) => state.setSchemaType))
-  const setChatType = useChat(useShallow((state) => state.setChatType))
+  const setChatMode = useChat(useShallow((state) => state.setChatMode))
 
   return (
     <DropdownMenuCheckboxItem
@@ -28,10 +28,10 @@ function ObjectMenuItem({ schema }: { schema: ObjectSchema }) {
       onSelect={(e) => e.preventDefault()}
       onClick={() => {
         setSchemaType(schema.type)
-        setChatType("object")
+        setChatMode("object")
       }}
       checked={
-        schema.type === selectedSchemaType && selectedChatType === "object"
+        schema.type === selectedSchemaType && selectedChatMode === "object"
       }
     >
       {schema.name}
@@ -39,21 +39,19 @@ function ObjectMenuItem({ schema }: { schema: ObjectSchema }) {
   )
 }
 
-type ChatTypeItemProps = {
-  chatType: ChatType
+type ChatModeItemProps = {
+  chatMode: ChatMode
 }
 
-function ChatTypeItem({ chatType }: ChatTypeItemProps) {
-  const selectedChatType = useChat(useShallow((state) => state.chatType))
-  const setChatType = useChat(useShallow((state) => state.setChatType))
+function ChatModeItem({ chatMode }: ChatModeItemProps) {
+  const selectedChatMode = useChat(useShallow((state) => state.chatMode))
+  const setChatMode = useChat(useShallow((state) => state.setChatMode))
 
-  if (chatType.type === "object") {
+  if (chatMode.mode === "object") {
     return (
       <DropdownMenuSub>
-        <DropdownMenuSubTrigger className="">
-          {chatType.name}
-        </DropdownMenuSubTrigger>
-        <DropdownMenuSubContent className="">
+        <DropdownMenuSubTrigger>{chatMode.name}</DropdownMenuSubTrigger>
+        <DropdownMenuSubContent>
           {objectSchemas.map((schema) => (
             <ObjectMenuItem key={schema.id} schema={schema} />
           ))}
@@ -65,10 +63,10 @@ function ChatTypeItem({ chatType }: ChatTypeItemProps) {
     <DropdownMenuCheckboxItem
       className=""
       onSelect={(e) => e.preventDefault()}
-      onClick={() => setChatType(chatType.type)}
-      checked={chatType.type === selectedChatType}
+      onClick={() => setChatMode(chatMode.mode)}
+      checked={chatMode.mode === selectedChatMode}
     >
-      {chatType.name}
+      {chatMode.mode}
     </DropdownMenuCheckboxItem>
   )
 }
@@ -85,8 +83,8 @@ export function ChatPreferencesMenu() {
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="">
-        {chatTypes.map((chatType) => (
-          <ChatTypeItem key={chatType.id} chatType={chatType} />
+        {chatModes.map((chatMode) => (
+          <ChatModeItem key={chatMode.id} chatMode={chatMode} />
         ))}
       </DropdownMenuContent>
     </DropdownMenu>

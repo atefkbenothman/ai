@@ -1,31 +1,31 @@
 import { type CoreMessage } from "ai"
 import { ObjectSchemaType } from "./schemas"
 
-export type ChatCategory = "chat" | "object"
+export type ChatModes = "chat" | "object"
 
 export type CoreMessageExtras = CoreMessage & {
-  chatType: ChatCategory
+  chatMode: ChatModes
   schemaType: ObjectSchemaType
 }
 
-export type ChatType = {
+export type ChatMode = {
   id: string
   name: string
-  type: ChatCategory
+  mode: ChatModes
   description: string
 }
 
-export const chatTypes: Array<ChatType> = [
+export const chatModes: ChatMode[] = [
   {
     id: "chat",
     name: "normal",
-    type: "chat",
+    mode: "chat",
     description: "normal chat",
   },
   {
     id: "object",
     name: "schemas",
-    type: "object",
+    mode: "object",
     description: "generate strutured object",
   },
 ] as const

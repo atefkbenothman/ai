@@ -29,7 +29,7 @@ export function MessageList() {
         message={{
           role: "assistant",
           content: "Hello!",
-          chatType: "chat",
+          chatMode: "chat",
           schemaType: schemaType,
         }}
       />

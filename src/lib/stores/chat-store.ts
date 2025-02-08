@@ -2,16 +2,16 @@ import { create } from "zustand"
 import { CoreMessage } from "ai"
 import { chat, getObject } from "@/server/ai/actions"
 import { ObjectSchemaType } from "@/lib/ai/schemas"
-import { ChatCategory, CoreMessageExtras } from "@/lib/ai/chat-types"
+import { ChatModes, CoreMessageExtras } from "@/lib/ai/chat-modes"
 
 type ChatState = {
   messages: CoreMessageExtras[]
-  chatType: ChatCategory
+  chatMode: ChatModes
   schemaType: ObjectSchemaType
   model: string
   addMessage: (message: CoreMessage) => void
   updateLastMessage: (content: string) => void
-  setChatType: (type: ChatCategory) => void
+  setChatMode: (type: ChatModes) => void
   setSchemaType: (schema: ObjectSchemaType) => void
   handleAddMessage: (message: CoreMessage) => void
 }
@@ -65,14 +65,14 @@ async function sendObject(
 
 export const useChat = create<ChatState>((set, get) => ({
   messages: [] as CoreMessageExtras[],
-  chatType: "chat" as ChatCategory,
+  chatMode: "chat" as ChatModes,
   schemaType: "snippets" as ObjectSchemaType,
   model: "Groq",
   addMessage: (message) => {
     set((state) => ({
       messages: [
         ...state.messages,
-        { ...message, chatType: state.chatType, schemaType: state.schemaType },
+        { ...message, chatMode: state.chatMode, schemaType: state.schemaType },
       ],
     }))
   },
@@ -83,20 +83,20 @@ export const useChat = create<ChatState>((set, get) => ({
           ? {
               role: "assistant",
               content: content,
-              chatType: state.chatType,
+              chatMode: state.chatMode,
               schemaType: state.schemaType,
             }
           : msg,
       ),
     })),
-  setChatType: (chatType) => set({ chatType }),
+  setChatMode: (chatMode) => set({ chatMode }),
   setSchemaType: (schemaType) => set({ schemaType }),
   handleAddMessage: (message) => {
     const state = get()
     state.addMessage(message)
     const newMessages = [...state.messages, message]
     if (message.role === "user") {
-      switch (state.chatType) {
+      switch (state.chatMode) {
         case "chat":
           sendChat(newMessages, state)
           break
