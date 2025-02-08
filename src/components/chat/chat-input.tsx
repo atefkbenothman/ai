@@ -1,10 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { CoreMessage } from "ai"
+import { type CoreMessage } from "ai"
+import { Mic } from "@/components/mic"
 import { AutoResizeTextArea } from "@/components/chat/autoresize-textarea"
-import { Button } from "@/components/ui/button"
-import { Mic } from "lucide-react"
 import { useChat } from "@/lib/stores/chat-store"
 import { useShallow } from "zustand/react/shallow"
 
@@ -33,9 +32,8 @@ export function ChatInput() {
     setMessage("")
   }
 
-  const handleToggleMic = (e: React.MouseEvent) => {
-    e.preventDefault()
-    console.log("Mic toggled")
+  const handleMicOutput = (text: string) => {
+    setMessage(text)
   }
 
   return (
@@ -52,15 +50,7 @@ export function ChatInput() {
         onChange={setMessage}
         onKeyDown={handleKeyDown}
       />
-
-      <Button
-        variant="ghost"
-        size="sm"
-        className="absolute bottom-1.5 right-1 size-6 rounded-sm"
-        onClick={handleToggleMic}
-      >
-        <Mic size={16} />
-      </Button>
+      <Mic onTextOutput={handleMicOutput} />
     </form>
   )
 }
