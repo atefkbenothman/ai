@@ -32,7 +32,7 @@ export const CommandMenu = () => {
       }}
     >
       <DialogTitle />
-      <DialogContent className="bg-black p-1 text-sm sm:max-w-[425px]">
+      <DialogContent className="border-[0.09rem] bg-black p-1 text-sm sm:max-w-[425px]">
         <DialogHeader className="flex w-full flex-row items-center justify-center">
           <div className="flex w-full items-center">
             <Input

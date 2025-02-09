@@ -18,7 +18,7 @@ function SearchBar() {
   const setOpen = useCommandStore((state) => state.setOpen)
   return (
     <Button
-      className="m-0 rounded-sm p-0 py-3.5 pl-2 pr-1 text-white/50"
+      className="m-0 rounded-sm border-[0.09rem] p-0 py-3.5 pl-2 pr-1 text-white/50"
       variant="outline"
       size="xs"
       onClick={() => {
@@ -30,10 +30,10 @@ function SearchBar() {
         <p className="mr-4">Search...</p>
       </div>
       <div className="flex flex-row gap-1">
-        <p className="flex w-[1rem] items-center justify-center rounded-sm border text-[0.5rem]">
+        <p className="flex w-[1rem] items-center justify-center rounded-sm border-[0.09rem] text-[0.5rem]">
           ⌘
         </p>
-        <p className="flex w-[1rem] items-center justify-center rounded-sm border text-[0.5rem]">
+        <p className="flex w-[1rem] items-center justify-center rounded-sm border-[0.09rem] text-[0.5rem]">
           K
         </p>
       </div>

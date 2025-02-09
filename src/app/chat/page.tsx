@@ -6,7 +6,9 @@ import { Chat } from "@/components/chat/chat"
 export default async function ChatPage() {
   return (
     <PageContent>
-      <Chat />
+      <div className="h-full">
+        <Chat />
+      </div>
     </PageContent>
   )
 }

@@ -7,11 +7,15 @@ import { MessageList } from "@/components/chat/message-list"
 
 export function Chat() {
   return (
-    <div>
+    <div className="flex h-full flex-col">
       <ChatHeader />
       <Separator className="h-[0.09rem]" />
-      <MessageList />
-      <ChatInput />
+      <div className="flex-1 overflow-auto">
+        <MessageList />
+      </div>
+      <div className="mt-auto">
+        <ChatInput />
+      </div>
     </div>
   )
 }
