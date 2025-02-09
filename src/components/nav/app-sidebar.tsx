@@ -12,7 +12,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { Home, MessageCircle, Settings } from "lucide-react"
+import { Home, MessageCircle, Settings, User } from "lucide-react"
 
 const items = [
   {
@@ -50,10 +50,7 @@ export function AppSidebar() {
                       (item.url === "/" && pathname === "")
                     }
                   >
-                    <Link
-                      href={item.url}
-                      className="font-[family-name:var(--font-pretendard)] text-base font-medium"
-                    >
+                    <Link href={item.url} className="text-lg font-medium">
                       <item.icon strokeWidth={2.3} />
                       <span>{item.title}</span>
                     </Link>
@@ -63,9 +60,25 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-        <SidebarGroup />
       </SidebarContent>
-      <SidebarFooter />
+      <SidebarFooter className="">
+        <SidebarGroupContent>
+          <SidebarMenu className="gap-2">
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                className="items-center gap-4"
+                isActive={pathname === "/login"}
+              >
+                <Link href="/login" className="text-lg font-medium">
+                  <User strokeWidth={2.3} />
+                  <span>Sign In</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroupContent>
+      </SidebarFooter>
     </Sidebar>
   )
 }

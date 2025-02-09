@@ -47,6 +47,15 @@ export const useCommands = () => {
       keywords: ["settings"],
       action: () => router.push("/settings"),
     },
+    {
+      id: "login",
+      name: "Login",
+      description: "Navigate to the login page",
+      icon: Link,
+      category: "navigation",
+      keywords: ["login", "signin"],
+      action: () => router.push("/login"),
+    },
     ...chatModes.map((mode) => ({
       id: `mode-${mode.id}`,
       name: mode.name,
