@@ -4,7 +4,7 @@ export type ProviderConfig = {
 
 export const providers: Record<string, ProviderConfig> = {
   Groq: {
-    apiKey: process.env.NEXT_PUBLIC_API_KEY ?? "",
+    apiKey: process.env.NEXT_PUBLIC_GROQ_API_KEY ?? "",
   },
   OpenAI: {
     apiKey: "openai api key",

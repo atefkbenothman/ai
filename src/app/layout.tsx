@@ -6,6 +6,7 @@ import { AppSidebar } from "@/components/nav/app-sidebar"
 import { NavHeader } from "@/components/nav/nav-header"
 import { CommandMenu } from "@/components/command-menu"
 import { Toaster } from "sonner"
+import { ClerkProvider } from "@clerk/nextjs"
 import "./globals.css"
 
 const geistMono = Geist_Mono({
@@ -34,21 +35,23 @@ export default async function RootLayout({
   const defaultOpen = cookieStore.get("sidebar:state")?.value === "true"
 
   return (
-    <html lang="en">
-      {/* <head>
+    <ClerkProvider>
+      <html lang="en">
+        {/* <head>
         <script src="https://unpkg.com/react-scan/dist/auto.global.js" async />
       </head> */}
-      <body className={`${geistMono.variable} dark max-w-full antialiased`}>
-        <SidebarProvider defaultOpen={defaultOpen}>
-          <AppSidebar />
-          <CommandMenu />
-          <SidebarInset>
-            <NavHeader />
-            <main>{children}</main>
-          </SidebarInset>
-          <Toaster position="bottom-right" />
-        </SidebarProvider>
-      </body>
-    </html>
+        <body className={`${geistMono.variable} dark max-w-full antialiased`}>
+          <SidebarProvider defaultOpen={defaultOpen}>
+            <AppSidebar />
+            <CommandMenu />
+            <SidebarInset>
+              <NavHeader />
+              <main>{children}</main>
+            </SidebarInset>
+            <Toaster position="bottom-right" />
+          </SidebarProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }
