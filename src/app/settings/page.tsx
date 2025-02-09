@@ -1,43 +1,23 @@
 "use server"
 
 import { PageContent } from "@/components/page-content"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ApiSettings } from "@/components/settings/api-settings"
+import { Settings } from "@/components/settings/settings"
+import { Separator } from "@/components/ui/separator"
 
-function ProfileSettings() {
-  return (
-    <div>
-      <p>Profile</p>
-    </div>
-  )
-}
-
-const tabs = {
-  API: <ApiSettings />,
-  Profile: <ProfileSettings />,
-}
-
-export default async function Settings() {
+export default async function SettingsPage() {
   return (
     <PageContent>
-      <Tabs defaultValue="API" className="text-sm">
-        <TabsList>
-          {Object.keys(tabs).map((name) => (
-            <TabsTrigger key={name} value={name}>
-              {name}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-        {Object.entries(tabs).map(([name, component]) => (
-          <TabsContent
-            key={name}
-            value={name}
-            className="w-full py-2 md:w-1/2 lg:w-1/3"
-          >
-            {component}
-          </TabsContent>
-        ))}
-      </Tabs>
+      <div className="flex items-center justify-between py-1">
+        <div className="ml-2 flex-1 items-center" />
+        <div className="flex flex-row items-center justify-center gap-2">
+          <p className="text-md font-semibold">Settings</p>
+        </div>
+        <div className="mr-2 flex flex-1 items-center justify-end"></div>
+      </div>
+      <Separator className="h-[0.09rem]" />
+      <div className="flex h-full w-full items-center justify-center">
+        <Settings />
+      </div>
     </PageContent>
   )
 }
