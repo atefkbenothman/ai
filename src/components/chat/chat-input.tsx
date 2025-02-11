@@ -6,11 +6,13 @@ import { Mic } from "@/components/mic"
 import { AutoResizeTextArea } from "@/components/chat/autoresize-textarea"
 import { useChat } from "@/lib/stores/chat-store"
 import { useShallow } from "zustand/react/shallow"
+import { useFileTree } from "@/lib/stores/file-tree-store"
 
 export function ChatInput() {
   const handleAddMessage = useChat(
     useShallow((state) => state.handleAddMessage),
   )
+  const selectedFiles = useFileTree((state) => state.selectedFiles)
 
   const [message, setMessage] = useState<string>("")
 
@@ -27,7 +29,18 @@ export function ChatInput() {
       setMessage("")
       return
     }
-    const coreMessage = { role: "user", content: message } as CoreMessage
+    let content = message
+    // Add selected file contents to the message
+    if (selectedFiles.size > 0) {
+      const fileContents = await Promise.all(
+        Array.from(selectedFiles.entries()).map(async ([path, file]) => {
+          const text = await file.text()
+          return `File: ${path}\n\`\`\`\n${text}\n\`\`\`\n`
+        }),
+      )
+      content += "\n\n" + fileContents.join("\n")
+    }
+    const coreMessage = { role: "user", content } as CoreMessage
     handleAddMessage(coreMessage)
     setMessage("")
   }

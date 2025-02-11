@@ -1,7 +1,8 @@
-import { Link, LucideIcon, CodeXml } from "lucide-react"
+import { Link, LucideIcon, CodeXml, Columns2 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useChat } from "@/lib/stores/chat-store"
 import { chatModes } from "@/lib/ai/chat-modes"
+import { useSidePanel } from "../stores/side-panel-store"
 
 export type CommandItem = {
   id: string
@@ -18,6 +19,8 @@ export const useCommands = () => {
   const router = useRouter()
 
   const { setChatMode } = useChat()
+
+  const toggle = useSidePanel((state) => state.toggle)
 
   const commands: CommandItem[] = [
     {
@@ -55,6 +58,15 @@ export const useCommands = () => {
       category: "navigation",
       keywords: ["login", "signin"],
       action: () => router.push("/login"),
+    },
+    {
+      id: "panel-file-tree",
+      name: "File Tree",
+      description: "Open file tree",
+      icon: Columns2,
+      category: "panel",
+      keywords: ["panel", "filetree", "side"],
+      action: () => toggle(),
     },
     ...chatModes.map((mode) => ({
       id: `mode-${mode.id}`,
