@@ -1,5 +1,5 @@
 {
-  "name": "ai-web",
+  "name": "ai",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@atefkbenothman/ai-core": "^1.1.0",
-    "@clerk/nextjs": "^6.11.1",
     "@radix-ui/react-checkbox": "^1.1.4",
     "@radix-ui/react-collapsible": "^1.1.3",
     "@radix-ui/react-dialog": "^1.1.6",
@@ -26,8 +25,6 @@
     "@radix-ui/react-tabs": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.1.7",
     "@radix-ui/themes": "^3.2.0",
-    "@supabase/ssr": "^0.5.2",
-    "@supabase/supabase-js": "^2.48.1",
     "ai": "^3.3.20",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -56,7 +53,6 @@
     "postcss": "^8",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.11",
-    "supabase": "^2.9.6",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
