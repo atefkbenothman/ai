@@ -51,7 +51,7 @@ export type ObjectSchema = {
 export const objectSchemas: ObjectSchema[] = [
   {
     id: "code-snippets",
-    name: "code snippets",
+    name: "Code Snippets",
     type: "snippets",
     description: "generate code snippets for a given topic",
     schema: codeSnippetSchema,

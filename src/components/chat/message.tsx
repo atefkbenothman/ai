@@ -17,8 +17,8 @@ export function UserMessage({ message }: MessageProps) {
   }
   return (
     <div className="flex justify-end">
-      <div className="max-w-2xl rounded-sm bg-blue-600 p-2 text-sm font-medium xl:max-w-3xl">
-        <ReactMarkdown className="overflow-x-scroll whitespace-pre-wrap text-sm tracking-wide text-white/90">
+      <div className="max-w-[100%] rounded-sm bg-message p-2 text-sm font-medium lg:max-w-[90%]">
+        <ReactMarkdown className="overflow-x-auto whitespace-pre-wrap text-sm tracking-wide text-white/90">
           {message.content as string}
         </ReactMarkdown>
       </div>
@@ -94,10 +94,7 @@ export function AssistantMessage({ message }: MessageProps) {
                     {String(children).replace(/\n$/, "")}
                   </Prism>
                 ) : (
-                  <code
-                    className="bg-gray-100 text-sm dark:bg-gray-700"
-                    {...props}
-                  >
+                  <code className="bg-black font-semibold" {...props}>
                     {children}
                   </code>
                 )

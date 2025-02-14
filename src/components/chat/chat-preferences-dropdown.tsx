@@ -7,7 +7,6 @@ import {
   DropdownMenuSub,
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
-  // DropdownMenuItem,
   DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu"
 import { EllipsisVertical } from "lucide-react"
@@ -24,7 +23,7 @@ function ObjectMenuItem({ schema }: { schema: ObjectSchema }) {
 
   return (
     <DropdownMenuCheckboxItem
-      className=""
+      className="bg-sidebar focus:bg-background"
       onSelect={(e) => e.preventDefault()}
       onClick={() => {
         setSchemaType(schema.type)
@@ -51,7 +50,7 @@ function ChatModeItem({ chatMode }: ChatModeItemProps) {
     return (
       <DropdownMenuSub>
         <DropdownMenuSubTrigger>{chatMode.name}</DropdownMenuSubTrigger>
-        <DropdownMenuSubContent>
+        <DropdownMenuSubContent className="bg-sidebar">
           {objectSchemas.map((schema) => (
             <ObjectMenuItem key={schema.id} schema={schema} />
           ))}
@@ -61,12 +60,12 @@ function ChatModeItem({ chatMode }: ChatModeItemProps) {
   }
   return (
     <DropdownMenuCheckboxItem
-      className=""
+      className="bg-sidebar focus:bg-background"
       onSelect={(e) => e.preventDefault()}
       onClick={() => setChatMode(chatMode.mode)}
       checked={chatMode.mode === selectedChatMode}
     >
-      {chatMode.mode}
+      {chatMode.name}
     </DropdownMenuCheckboxItem>
   )
 }
@@ -82,7 +81,7 @@ export function ChatPreferencesMenu() {
           size={18}
         />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="">
+      <DropdownMenuContent align="end" className="bg-sidebar font-medium">
         {chatModes.map((chatMode) => (
           <ChatModeItem key={chatMode.id} chatMode={chatMode} />
         ))}
