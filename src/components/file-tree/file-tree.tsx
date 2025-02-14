@@ -41,7 +41,7 @@ export function FileTree() {
         </div>
       ) : (
         <div className="no-scrollbar flex h-full w-full flex-col p-4">
-          <div className="mb-4 rounded-sm border-[0.09rem] p-2 text-sm font-medium text-white/70">
+          <div className="mb-4 rounded-sm border-[0.1rem] p-2 text-sm font-medium text-white/70">
             <p>Selected Files: {selectedFiles.size} files</p>
           </div>
           <div className="flex-1 overflow-auto">

@@ -52,7 +52,7 @@ export function ChatInput() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="relative mx-auto my-4 flex w-3/4 items-center justify-center rounded-sm border bg-sidebar px-1 py-1 pr-8 text-sm focus-within:outline-none focus-within:ring-2 focus-within:ring-ring/10 focus-within:ring-offset-0"
+      className="relative mx-auto my-4 flex w-3/4 items-center justify-center rounded-sm border-[0.01rem] bg-sidebar px-1 py-1 pr-8 text-sm focus-within:outline-none focus-within:ring-2 focus-within:ring-ring/10 focus-within:ring-offset-0"
     >
       <AutoResizeTextArea
         id="message"

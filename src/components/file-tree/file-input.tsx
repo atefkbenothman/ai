@@ -49,7 +49,7 @@ export function FileInput({ setTreeData }: FileInputProps) {
   return (
     <Button
       variant="outline"
-      className="rounded-sm border-[0.09rem] hover:cursor-default"
+      className="rounded-sm border-[0.1rem] hover:cursor-default"
     >
       <div className="flex w-full flex-row items-center justify-center gap-2">
         <Folder className="scale-90" />

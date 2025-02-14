@@ -39,7 +39,7 @@ export function Settings() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex w-[35rem] flex-col gap-2 rounded-sm border border-[0.09rem] p-4"
+      className="flex w-[35rem] flex-col gap-2 rounded-sm border border-[0.1rem] p-4"
     >
       <Label htmlFor="apiKey" className="text-md font-semibold">
         Groq API Key
@@ -51,7 +51,7 @@ export function Settings() {
           type="text"
           value={apiKeyValue}
           onChange={(e) => setApiKeyValue(e.target.value)}
-          className="w-full border-[0.09rem] text-white/80"
+          className="w-full border-[0.1rem] text-white/80"
           disabled={!isEditing}
           required
         />
@@ -59,7 +59,7 @@ export function Settings() {
           <Button
             variant="outline"
             size="icon"
-            className="border-[0.09rem]"
+            className="border-[0.1rem]"
             onClick={() => setIsEditing(false)}
             type="button"
           >
@@ -69,7 +69,7 @@ export function Settings() {
           <Button
             variant="outline"
             size="icon"
-            className="border-[0.09rem]"
+            className="border-[0.1rem]"
             onClick={handleEdit}
             type="button"
           >
@@ -80,7 +80,7 @@ export function Settings() {
           variant="outline"
           size="icon"
           type="button"
-          className="border-[0.09rem]"
+          className="border-[0.1rem]"
           onClick={handleDelete}
         >
           <Trash2 className="h-4 w-4 text-red-600" />

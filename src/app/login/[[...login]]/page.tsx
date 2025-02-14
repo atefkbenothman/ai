@@ -12,7 +12,7 @@ export default function LoginPage() {
         </div>
         <div className="mr-2 flex flex-1 items-center justify-end"></div>
       </div>
-      <Separator className="h-[0.09rem]" />
+      <Separator className="h-[0.1rem]" />
       <div className="flex h-full items-center justify-center">
         <div className="flex w-[20rem] flex-col rounded-sm p-2">
           <Button type="submit" className="w-full rounded-sm">

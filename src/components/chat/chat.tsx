@@ -9,7 +9,7 @@ export function Chat() {
   return (
     <div className="flex h-full flex-col">
       <ChatHeader />
-      <Separator className="h-[0.09rem]" />
+      <Separator className="h-[0.1rem]" />
       <div className="flex-1 overflow-auto">
         <MessageList />
       </div>

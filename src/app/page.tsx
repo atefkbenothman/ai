@@ -13,7 +13,7 @@ export default async function Home() {
         </div>
         <div className="mr-2 flex flex-1 items-center justify-end"></div>
       </div>
-      <Separator className="h-[0.09rem]" />
+      <Separator className="h-[0.1rem]" />
     </PageContent>
   )
 }
