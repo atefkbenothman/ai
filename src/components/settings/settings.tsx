@@ -39,7 +39,7 @@ export function Settings() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex w-[35rem] flex-col gap-2 rounded-sm border border-[0.1rem] p-4"
+      className="flex w-[90%] flex-col gap-2 rounded-sm border border-[0.1rem] p-4 md:w-[75%] lg:w-[50%] xl:w-[40%]"
     >
       <Label htmlFor="apiKey" className="text-md font-semibold">
         Groq API Key
