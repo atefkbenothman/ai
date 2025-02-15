@@ -12,72 +12,84 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { Home, MessageCircle, Settings, User } from "lucide-react"
+import { SignedIn, SignedOut, useUser } from "@clerk/nextjs"
+import { User } from "lucide-react"
+import { navigationItems } from "@/lib/nav-items"
 
-const items = [
-  {
-    title: "Home",
-    url: "/",
-    icon: Home,
-  },
-  {
-    title: "Chat",
-    url: "/chat",
-    icon: MessageCircle,
-  },
-  {
-    title: "Settings",
-    url: "/settings",
-    icon: Settings,
-  },
-]
+function NavSection({ currentPath }: { currentPath: string }) {
+  return (
+    <SidebarMenu className="gap-2">
+      {navigationItems.map((item) => (
+        <SidebarMenuItem key={item.title}>
+          <SidebarMenuButton
+            asChild
+            className="items-center gap-4"
+            isActive={
+              currentPath === item.url ||
+              (item.url === "/" && currentPath === "")
+            }
+          >
+            <Link href={item.url} className="text-lg font-medium">
+              <item.icon strokeWidth={2.3} />
+              <span>{item.title}</span>
+            </Link>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      ))}
+    </SidebarMenu>
+  )
+}
+
+function UserSection({ currentPath }: { currentPath: string }) {
+  const { user } = useUser()
+  return (
+    <SidebarMenu className="gap-3">
+      <SignedOut>
+        <SidebarMenuItem>
+          <SidebarMenuButton
+            asChild
+            className="items-center gap-4"
+            isActive={currentPath === "/login"}
+          >
+            <Link href="/login" className="text-lg font-medium">
+              <User strokeWidth={2.3} />
+              <span>Log In</span>
+            </Link>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      </SignedOut>
+      <SignedIn>
+        <SidebarMenuItem>
+          <SidebarMenuButton
+            asChild
+            className="items-center gap-4"
+            isActive={currentPath === "/login"}
+          >
+            <Link href="/login" className="text-lg font-medium">
+              <User strokeWidth={2.3} />
+              <span>{user?.fullName}</span>
+            </Link>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      </SignedIn>
+    </SidebarMenu>
+  )
+}
 
 export function AppSidebar() {
   const pathname = usePathname()
-
   return (
-    <Sidebar collapsible="icon" className="border-sidebar-border">
+    <Sidebar collapsible="icon">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu className="gap-2">
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    asChild
-                    className="items-center gap-4"
-                    isActive={
-                      pathname === item.url ||
-                      (item.url === "/" && pathname === "")
-                    }
-                  >
-                    <Link href={item.url} className="text-lg font-medium">
-                      <item.icon strokeWidth={2.3} />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
+            <NavSection currentPath={pathname} />
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className="">
+      <SidebarFooter>
         <SidebarGroupContent>
-          <SidebarMenu className="gap-2">
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                className="items-center gap-4"
-                isActive={pathname === "/login"}
-              >
-                <Link href="/login" className="text-lg font-medium">
-                  <User strokeWidth={2.3} />
-                  <span>Log In</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
+          <UserSection currentPath={pathname} />
         </SidebarGroupContent>
       </SidebarFooter>
     </Sidebar>
