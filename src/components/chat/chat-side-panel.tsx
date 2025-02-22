@@ -1,5 +1,5 @@
 import { Separator } from "@/components/ui/separator"
-import { FileTree } from "@/components/file-tree/file-tree"
+import { FileTree } from "@/components/filetree/file-tree"
 
 export function ChatSidePanel() {
   return (

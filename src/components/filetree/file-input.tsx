@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Folder } from "lucide-react"
-import { type TreeItemType } from "@/components/file-tree/tree-item"
+import { type TreeItemType } from "@/components/filetree/tree-item"
 
 function formatDirectoryStructure(fileList: FileList): TreeItemType[] {
   const tree: TreeItemType[] = []

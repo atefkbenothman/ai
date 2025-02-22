@@ -1,7 +1,9 @@
-import { type TreeItemType } from "@/components/file-tree/tree-item"
+"use client"
+
+import { type TreeItemType } from "@/components/filetree/tree-item"
 import { useState } from "react"
-import { TreeItem } from "@/components/file-tree/tree-item"
-import { FileInput } from "@/components/file-tree/file-input"
+import { TreeItem } from "@/components/filetree/tree-item"
+import { FileInput } from "@/components/filetree/file-input"
 import { useFileTree } from "@/lib/stores/file-tree-store"
 
 declare module "react" {

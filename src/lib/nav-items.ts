@@ -1,4 +1,4 @@
-import { Home, MessageCircle, Settings } from "lucide-react"
+import { Home, MessageCircle, Settings, FolderCode } from "lucide-react"
 
 export const navigationItems = [
   {
@@ -10,6 +10,11 @@ export const navigationItems = [
     title: "Chat",
     url: "/chat",
     icon: MessageCircle,
+  },
+  {
+    title: "File Tree",
+    url: "/filetree",
+    icon: FolderCode,
   },
   {
     title: "Settings",
